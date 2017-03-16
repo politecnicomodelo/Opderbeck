@@ -39,3 +39,4 @@ class Alumno (object):
             cantidad += 1
 
         return suma/cantidad
+    print ("pete")
