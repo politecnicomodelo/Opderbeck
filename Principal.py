@@ -1,9 +1,29 @@
-from Clases.mascota import Mascota
+from Clases.ejercitacion163 import Alumno
+from datetime import date
+from Clases.ejercitacion2163 import Materia
 
 
-miMascota = Mascota ()
+a = Alumno ()
+a.setNombre ("chuman")
+a.setApellido ("fiori")
+a.setNacimiento (date(2017,3,4))
+print (a.nombre , a.apellido, a.setMayor, a.setMenor)
+mate = Materia()
 
-miMascota.setNombre ("Quaglia")
-miMascota.setTipo ("Fiori")
+mate.nombre = "tincho"
+mate.setNotas (5)
 
-print (miMascota.quienSoy ())
+a.materias.append (mate)
+for item in a.materias:
+    print (str (item.nombre) , str (item.lista_notas) , str (item.setPromedio_nota()))
+
+
+
+
+
+
+
+
+
+
+

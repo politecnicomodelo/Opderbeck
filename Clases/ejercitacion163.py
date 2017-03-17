@@ -1,12 +1,16 @@
+from .ejercitacion2163 import Materia
+
 class Alumno (object):
     nombre = ""
     apellido = ""
-    fecha_nacimiento = none
-    notas = []
+    fecha_nacimiento = None
+    materias = []
 
+    def __init__(self):
+        self.materias
 
-    def setNombre (self , a):
-        self.nombre = str (a)
+    def setNombre(self, a):
+        self.nombre = str(a)
 
     def setApellido (self , b):
         self.apellido = str (b)
@@ -14,29 +18,27 @@ class Alumno (object):
     def setNacimiento (self , c):
         self.nacimiento = c
 
-    def setNotas (self  , d):
-        (self.notas).append (d)
-
     def setMenor (self):
-        menor = notas[0]
-        for nota in notas:
-            if nota < menor :
-                menor = nota
-        return menor
+        return min(self.notas)
 
     def setMayor (self):
-        mayor = notas[0]
-        for nota in notas:
-            if nota > mayor :
-                mayor = nota
-        return mayor
+        return max(self.notas)
 
-    def setPromedio (self):
+    def seMateria (self , n):
+        (self.materias).append(n)
+
+    def setPromedioMateria (self , k):
         suma = 0
-        cantidad = 0
-        for nota int notas :
-            suma = suma + nota
-            cantidad += 1
+        for item in Materia:
+            suma += Materia.setPromedio_nota()
+        return suma/len (self.materias)
 
-        return suma/cantidad
-    print ("pete")
+    def setMaximoProm (self):
+        return max (materias.setPromedio_nota())# porque en materias en el principal tenes que igualar a la clase
+
+    def setMinimoProm (self):
+        return min (materias.setPromedio_nota())
+
+
+
+
