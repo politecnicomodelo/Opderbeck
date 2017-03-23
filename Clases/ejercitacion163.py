@@ -38,7 +38,7 @@ class Alumno (object):
         return max([item.promedio() for item in self.materias])
 
     def MinimoProm (self):
-        return min([item.promedio() for item in self.materias])
+        return min([item.promedio() for item in self.materias])#
 
 
 
