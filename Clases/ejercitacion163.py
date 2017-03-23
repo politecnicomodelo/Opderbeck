@@ -7,38 +7,38 @@ class Alumno (object):
     materias = []
 
     def __init__(self):
-        self.materias
+        self.materias = []
 
-    def setNombre(self, a):
-        self.nombre = str(a)
+    def setNombre(self, nombre):
+        self.nombre = str(nombre)
 
-    def setApellido (self , b):
-        self.apellido = str (b)
+    def setApellido (self , apellido):
+        self.apellido = str (apellido)
 
-    def setNacimiento (self , c):
-        self.nacimiento = c
+    def setNacimiento (self , fecha_nacimiento):
+        self.nacimiento = fecha_nacimiento
 
-    def setMenor (self):
-        return min(self.notas)
-
-    def setMayor (self):
-        return max(self.notas)
-
-    def seMateria (self , n):
+    def setMateria (self , n):
         (self.materias).append(n)
 
-    def setPromedioMateria (self , k):
+        def Menor(self):
+            return min(self.)
+
+        def Mayor(self):
+            return max(self.)
+
+    def PromedioMateria (self , k):
+        #return [item.promedio() for item in self.materias]       version loca
         suma = 0
         for item in Materia:
-            suma += Materia.setPromedio_nota()
+            suma += Materia.Promedio_nota()
         return suma/len (self.materias)
 
-    def setMaximoProm (self):
-        return max (materias.setPromedio_nota())# porque en materias en el principal tenes que igualar a la clase
+    def MaximoProm (self):
+        return max([item.promedio() for item in self.materias])
 
-    def setMinimoProm (self):
-        return min (materias.setPromedio_nota())
-
+    def MinimoProm (self):
+        return min([item.promedio() for item in self.materias])
 
 
 

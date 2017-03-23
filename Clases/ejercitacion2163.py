@@ -9,6 +9,5 @@ class Materia (object):
     def setNotas (self , b):
         (self.lista_notas).append(b)
 
-    def setPromedio_nota(self):
+    def Promedio_nota(self):
         return sum(self.lista_notas)/len(self.lista_notas)
-
