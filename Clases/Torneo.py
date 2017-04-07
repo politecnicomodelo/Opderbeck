@@ -6,15 +6,19 @@ class Torneo (object):
         lista_partidos = []
         lista_equipos = []
 
-    def equipos (self, lista_equipos):
+    def equipos (self, equipo):
 
-        for equipoActual in lista_equipos :
-            if equipoActual.nombre == lista_equipos.nombre :
+        for equipoActual in self.lista_equipos:
+            if equipoActual == self.lista_equipos:
                 return False
-        self.lista_equipos.append (lista_equipos)
+        self.lista_equipos.append (self.lista_equipos)
 
     def partidos (self, lista_partidos):
         self.lista_partidos.append (lista_partidos)
+
+
+
+
 
 
 class Jugador (object):
@@ -86,3 +90,5 @@ class Partido (object):
 
     def dia (self , dia):
         self.dia = dia
+
+

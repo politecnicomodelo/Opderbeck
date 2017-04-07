@@ -74,6 +74,24 @@ torneo.equipos (equipo2)
 
 #SET PARTIDO
 
+for
+for item in torneo.lista_equipos:
+    equipostotales += 1
+
+numero = equipostotales
+partidostotales = 0
+
+for numero in range (partidostotales):
+    partidostotales += numero - 1
+
+
+fecha_partidos = 0
+
+for fecha_partidos in range (partidostotales):
+
+
+
+
 
 
 
