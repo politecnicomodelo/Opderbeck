@@ -74,7 +74,7 @@ torneo.equipos (equipo2)
 
 #SET PARTIDO
 
-for
+
 for item in torneo.lista_equipos:
     equipostotales += 1
 
