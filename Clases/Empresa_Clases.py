@@ -2,8 +2,10 @@ class Empleado (object):
     nombre = ""
     apellido = ""
     telefono = 0
-
-
+    asistencia_dia = []
+    asistencia_total = 0
+    item2 = 0
+    dias = ""
     def __init__(self):
         asistencia_dia = []
 
@@ -19,12 +21,22 @@ class Empleado (object):
     def setAsistenciaDia (self, mes_dia):
         self.asistencia_dia.append(mes_dia) #guarda en la lista asistencia_dia el mes y los dias que fue en esa semana
 
+    def dias_Trabajados (self, mes, nombre):
+        #existe_Empleado (self.nombre)
+        #if existe_Empleado (self.nombre) == True:  #pregunta si el empleado existe
+        for item in self.asistencia_dia:     #si lo encontro recorre la lista de asistencia(donde se guarda los dias y meses que asiste)
+            self.item2 += 1             #item2 se utiliza para saber la posicion en la que estas
+            if item == self.mes:
+                self.dias = asistencia_dia [self.item2+1]
+                for item3 in self.dias [0:5]:
+                    self.asistencia_total += int(item3)
+        return self.asistencia_total
 
 
 class Empresa (object):
-    asistencia_total = 0
-    dias = 0
-    item2 = 0
+
+    lista_empleados = []
+
     def __init__(self):
         lista_empleados = []
 
@@ -36,19 +48,6 @@ class Empresa (object):
             if nombre == empleado.nombre:        #pregunta si el nombre pedido es un empleado
                 return True                      #si lo encontro devuelve true sino false
         return False
-
-    def dias_Trabajados (self, mes, nombre):
-        existeEmpleado(nombre)
-        if existeEmpleado(nombre) == true:  #pregunta si el empleado existe
-            for item in asistencia_dia:     #si lo encontro recorre la lista de asistencia(donde se guarda los dias y meses que asiste)
-                self.item2 += 1             #item2 se utiliza para saber la posicion en la que estas
-                if item == mes:             #busca si hay asistencia en el mes pedido
-                    self.dias = asitencia_dia [self.item2+1]  #iguala los dias = 0 a las asistencia del mes pedido
-                    for numero in self.dias[0:5]:             #recorre de las primeras 6 posiciones de dias(donde se guarda las asistencias)
-                        asistencia_total += numero            #suma los dias que si asistio
-
-        return asistencia_total  #devuelve el valor total de asistencias
-
 
     #def diasTrabajados (self, mes):
      #   for item in range:

@@ -11,18 +11,19 @@ from Clases.Empresa_Clases import *
 
 
 #CREANDO EMPLEADO::::::::::::::::::::::::::::::::::::::::::::::
-empleado1 = Empleado
+empleado1 = Empleado()
 
 #CREANDO EMPRESA:::::::::::::::::::::::::::::::::::::::::::::::
-empresa1 = Empresa
+empresa1 = Empresa()
 
 #ASIGNANDO DATOS AL EMPLEADO:::::::::::::::::::::::::::::::::::
-empleado1.nombre = "Nico"
-empleado1.apellido = "Prusci"
-empleado1.telefono = 1178213792
+empleado1.setNombre ("nico")
+empleado1.setApellido ("prusci")
+empleado1.setTelefono (1178213792)
 empleado1.setAsistenciaDia ("AB")   #abril
-empleado1.setAsistenciaDia (101010) #lunes si  martes no  miercoles si  jueves no  viernes si  sabado no
-
+empleado1.setAsistenciaDia ("101010") #lunes si  martes no  miercoles si  jueves no  viernes si  sabado no
+empleado1.setAsistenciaDia ("AB")   #abril
+empleado1.setAsistenciaDia ("011111")
 
 #INGRESANDO EMPLEADO A LA EMPRESA:::::::::::::::::::::::::::::
 empresa1.ingresar_Empleado(empleado1)
@@ -31,6 +32,6 @@ print (empresa1.existe_Empleado ("nico"))   #muestra si existe el empleado
 
 
 #CONSULTAR DIAS DE INGRESO::::::::::::::::::::::::::::::::::::
-empresa1.dias_Trabajados ("AB", "nico")         #Dias que trabajo en abril
-print (empresa1.dias_Trabajados ("AB", "nico")) #muestar el total de dias que trabajo en abril usuario nico
+empleado1.dias_Trabajados("AB", "nico")         #Dias que trabajo en abril nico
+print (empleado1.dias_Trabajados ("AB", "nico")) #muestar el total de dias que trabajo en abril usuario nico
 
