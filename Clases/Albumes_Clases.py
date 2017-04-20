@@ -29,7 +29,6 @@ class Canciones (object):
         self.autores.append(autores)
 
 
-
 class Personas (object):
     nombre = ""
-    apellido = ""
+    apellido = ''
