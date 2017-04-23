@@ -12,17 +12,17 @@ class Vehiculo (object):
     def setAñoFabricacion (self, año):
         self.año_fabricacion = año
 
-class Camioneta (Vehiculo):
-    Capacidad_carga = 0
+
+class CamionetaAutos (Vehiculo):
+    capacidad_carga = 0
+    descapotable = ""
 
     def setCapacidad (self, carga):
         self.capacidad_carga = carga
 
-class Autos (Vehiculo):
-    descapotable = ""
-
     def setDescapotable (self, desc):
         self.descapotable = str(desc)
+
 
 class Empresa (object):
     lista_autos = []

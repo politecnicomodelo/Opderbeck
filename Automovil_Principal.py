@@ -2,8 +2,7 @@
 from Clases.Automovil_Clases import *
 
 #CREANDO UN NUEVO VEICULO:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-vehiculo1 = Autos()
-vehiculo2 = Camioneta()
+vehiculo1 = CamionetaAutos()
 
 #CREANDO UNA NUEVA EMPRESA::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 empresa1 = Empresa()
@@ -14,51 +13,90 @@ vehiculo1.setRuedas (2)
 vehiculo1.setAñoFabricacion ("2016-06-12")
 vehiculo1.setDescapotable ("si")
 
-vehiculo2.setPatente ("456QWE")
-vehiculo2.setRuedas (4)
-vehiculo2.setAñoFabricacion ("2016-08-2")
-vehiculo2.setCapacidad (40)
-
-#INGRESANDO VEHICULOS A LA EMPRESA:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+#AGREGANDO LOS VEHICULOS A LA EMPRESA:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 empresa1.AgregarAuto (vehiculo1)
-empresa1.AgregarCamioneta (vehiculo2)
+
+#AGREGANDO DATOS A LOS VEICULOS:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+vehiculo1.setPatente ("456QWE")
+vehiculo1.setRuedas (4)
+vehiculo1.setAñoFabricacion ("2016-08-2")
+vehiculo1.setCapacidad (40)
+
+#AGREGANDO LOS VEHICULOS A LA EMPRESA:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+empresa1.AgregarCamioneta (vehiculo1)
+
+
 
 
 
 #SETEANDO INTERFAZ DEL USUARIO
-cantidad_vehiculos = ""
-numero = 0
 datos = ""
-lista_vehiculos = []
+opcion = ""
+numero = 0
+fin = False
+while fin != True:
+    #SETEANDO MENU::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+    print ("::::::::::::::::ELIJA UNA OPCION:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::\n")
+    print ("1)              VER DATOS DE LA EMPRESA")
+    print ("2)              INGRESAR DATOS DE UN AUTO")
+    print ("3)              INGRESAR DATOS DE UNA CAMIONETA")
+    print ("4)              SALIR")
 
-print("Ingrese la cantidad de vehiculos que tiene su empresa: ")
-cantidad_vehiculos = input(cantidad_vehiculos)
+    opcion = int (input (opcion))
 
-for vehiculos in range(int(cantidad_vehiculos)):
-    numero += 1
-    #INGRESA LA PATENTE:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-    print ("Ingrese el numero de patente que posee el vehiculo ", numero)
-    lista_vehiculos.append (input(datos))
-    #INGRESA LA CANTIDAD DE RUEDAS::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-    print ("Ingrese la cantidad de ruedas que posee el veiculo", numero)
-    lista_vehiculos.append (input(datos))
-    #INGRESA EL AÑO DE FABRICACION :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-    print ("Ingrese el año de fabricacion del veiculo", numero)
-    lista_vehiculos.append(input(datos))
-    #INGRESA SI ES UN AUTO O CAMIONETA::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-    print ("Ingrese si el vehiculo", numero, "es auto o camioneta")
-    lista_vehiculos.append (input(datos))
-    datos = lista_vehiculos[-1]
-    if datos == "auto":#SI EL VEHICULO ES UN AUTO INGRESA SI ES DESCAPOTABLE O NO
-        #INGRESA SI ES DESCAPOTABLE:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-        datos = ""
-        print ("Ingrese si el veiculo", numero, "es descapotable (si o no)")
-        lista_vehiculos.append (input(datos))
-    else:                                 #SINO , ES CAMIONETA E INGRESA CUANTA CARGA SOPORTA EL VEHICULO
-        #INGRESA CUANTA CARGA SOPORTA:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-        datos = ""
-        print ("Ingrese la capacidad que tiene el veiculo", numero)
-        lista_vehiculos.append (input(datos))
+
+    if opcion == 1:
+        print ("AUTOS::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::")
+        for auto in empresa1.lista_autos:
+            numero += 1
+            print ("Patente del auto", numero, ":", vehiculo1.patente)
+            print ("Cantidad de ruedas del auto", numero, " :", vehiculo1.cantidad_ruedas)
+            print ("Fecha de fabricacion del auto", numero, ":", vehiculo1.año_fabricacion)
+            print ("Descapotable", vehiculo1.descapotable)
+
+        numero = 0
+        print ("CAMIONETAS::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::")
+        for camioneta in empresa1.lista_camionetas:
+            numero += 1
+            print("Patente de la camioneta", numero, ":", vehiculo1.patente)
+            print("Cantidad de ruedas de la camioneta", numero, ":", vehiculo1.cantidad_ruedas)
+            print("Fecha de fabricacion de la camioneta", numero, ":", vehiculo1.año_fabricacion)
+            print ("La capacidad maxima es ", vehiculo1.capacidad_carga)
+
+    elif opcion == 2 or opcion == 3:
+        # INGRESA LA PATENTE:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+        print("Ingrese el numero de patente que posee el vehiculo ")
+        vehiculo1.setPatente (input(datos))
+
+        # INGRESA LA CANTIDAD DE RUEDAS::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+        print("Ingrese la cantidad de ruedas que posee el veiculo")
+        vehiculo1.setRuedas (input(datos))
+
+        # INGRESA EL AÑO DE FABRICACION :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+        print("Ingrese el año de fabricacion del veiculo")
+        vehiculo1.setAñoFabricacion (input(datos))
+
+        if opcion == 2:
+            #INGRESA SI ES DESCAPOTABLE:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+            print ("Ingrese si el veiculo es descapotable (si o no)")
+            vehiculo1.setDescapotable (input(datos))
+            empresa1.AgregarAuto (vehiculo1)
+
+
+        elif opcion == 3:
+            #INGRESA CUANTA CARGA SOPORTA:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+            print ("Ingrese la capacidad que tiene el veiculo")
+            vehiculo1.setCapacidad (input(datos))
+            empresa1.AgregarCamioneta (vehiculo1)
+
+        elif opcion == 4:
+            print ("PCIHI EL QUE LEE")
+            fin = True
+        else:
+            print ("ERROR, EL VEHICULO INGRESADO NO ES CORRECTO...")
+
+
+
 
 
 
