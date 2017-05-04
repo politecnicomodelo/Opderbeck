@@ -1,5 +1,6 @@
 #IMPORTANDO CLASES::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 from Clases.Automovil_Clases import *
+import Pygame
 
 #CREANDO UN NUEVO VEICULO:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 vehiculo1 = CamionetaAutos()
