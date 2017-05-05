@@ -11,6 +11,7 @@ class Persona(object):
     def setDescuento (self, descuento):
         self.descuento = descuento
 
+
 class Profesor(Persona):
     descuento = 0
 
@@ -42,6 +43,7 @@ class Pedido (object):
     entregado = 0
     platos = ""
     persona = ""
+    nombre = ""
 
     def setCreacion (self, fecha_creacion):
         self.fecha_creacion = fecha_creacion
@@ -58,6 +60,8 @@ class Pedido (object):
     def Persona (self, persona):
         self.persona = persona
 
+    def Pedido(self, nombre):
+         self.nombre = str(nombre)
 
 
 class Buffet (object):
@@ -71,11 +75,20 @@ class Buffet (object):
     platosdia = []
 
 #:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+    def __init__(self):
+        self.alumnos = []
+        self.profesores = []
+        self.platos = []
+        self.pedidos = []
+        self.platosdia = []
+
     def AgregarAlumno (self, alumno):
         self.alumnos.append(alumno)
 
     def EliminarAlumno (self, alumno):
-        self.alumnos.remove(alumno)
+        for item in self.alumnos:
+            if item.nombre == alumno:
+                self.alumnos.remove(alumno)
 
     def ModificarAlumno (self, alumno, nombre, apellido, division):
         for item in self.alumnos.nombre:
@@ -85,55 +98,79 @@ class Buffet (object):
                 self.alumnos.division = division
 
 #:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+#::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
     def AgregarProfesor(self, profesor):
         self.profesores.append(profesor)
 
     def EliminarProfesor(self, profesor):
-        self.profesores.remove(profesor)
+        for item in self.profesores:
+            if item.nombre == profesor:
+                 self.profesores.remove(profesor)
 
     def ModificarProfesor (self, profesor, nombre, apellido, descuento):
         for item in self.profesores:
-            if item == profesor:
+            if item.nombre == profesor:
                 self.profesores.nombre = nombre
                 self.profesores.apellido = apellido
                 self.profesores.descuento = descuento
 #:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
+#::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
     def AgregarPlato(self, plato):
         self.platos.append(plato)
 
     def EliminarPlato(self, plato):
-        self.platos.remove(plato)
-
-    def ModificarPlato (self, plato, nombre = None, precio = None):
         for item in self.platos:
-            if item == plato:
-                if nombre != None: self.platos.nombre = nombre
-                if precio != None: self.platos.precio = precio
+           if item.nombre == plato:
+                self.platos.remove(plato)
+
+    def ModificarPlato (self, plato, nombre, precio):
+        for item in self.platos:
+            if item.nombre == plato:
+                self.platos.nombre = nombre
+                self.platos.precio = precio
 
 #:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+#::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
     def AgregarPedido(self, plato):
-        self.platos.append(plato)
+        self.pedidos.append(plato)
 
-    def EliminarPedido(self, plato):
-        self.platos.remove(plato)
+    def EliminarPedido(self, pedido):
+        for item in self.pedidos:
+            if item.nombre == pedido:
+                self.pedidos.remove(pedido)
 
-    def ModificarPedido(self, pedido, plato, persona, entregado = None, hora_entrega = None, fecha_creacion = None):
-        if pedido not in self.pedidos:
-            return False
-        if plato not in self.platos:
-            return False
-        if persona not in self.profesores and persona not in self.profesores:
-            return False
-        if entregado != None: self.pedidos.entregado = entregado
-        if hora_entrega != None: self.pedidos.fecha_entrega = hora_entrega
-        if fecha_creacion != None: self.pedidos.fecha_creacion = fecha_creacion
+    def ModificarPedido(self, pedido, plato, persona, profesor = 0,  entregado = None, hora_entrega = None, fecha_creacion = None):
+        for item in self.pedidos:
+            if pedido not in item.nombre:
+                return False
+
+        for item in self.platos:
+            if plato not in item.nombre:
+                return False
+
+        if profesor != 0:
+            for item in self.profesores:
+                 if persona not in item.nombre:
+                    return False
+        else:
+            for item in self.alumnos:
+                if persona not in item.nombre:
+                    return False
+
+        self.pedidos.entregado = entregado
+        self.pedidos.fecha_entrega = hora_entrega
+        self.pedidos.fecha_creacion = fecha_creacion
 
 #:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
     def PlatosDelDia(self, fecha):
-        for item in self.pedidos.fecha_entrega:
-            if fecha == item:
-                if self.pedidos.entregado == False:
+        for item in self.pedidos:
+            if fecha == item.fecha_entrega:
+                if item.entregado == 0:
                     self.platosdia.append (self.pedidos)
-
         return self.platosdia
