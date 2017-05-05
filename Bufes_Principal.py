@@ -77,6 +77,7 @@ while True:
         buffet.AgregarProfesor (profesor)
 
     elif opcion == "a" and opcion1 == "b":
+        plato = Plato()
         print ("INGRESE EL NOMBRE DEL PLATO: ")
         dato = input ()
         plato.setPlatoNombre (dato)
@@ -86,6 +87,7 @@ while True:
         buffet.AgregarPlato (plato)
 
     elif opcion == "a" and opcion1 == "c":
+        pedido = Pedido()
         print ("INGRESE LA FECHA DE CREACION: ")
         dato = input ()
         pedido.setCreacion (dato)
