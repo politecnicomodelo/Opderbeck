@@ -11,7 +11,7 @@ class Persona(object):
     def setDescuento (self, descuento):
         self.descuento = descuento
 
-class Profesores(Persona):
+class Profesor(Persona):
     descuento = 0
 
     def setDescuento (self, descuento):
@@ -25,7 +25,7 @@ class Alumno(Persona):
         self.division = division
 
 
-class Platos (object):
+class Plato (object):
     nombre = ""
     precio = 0
 
@@ -60,7 +60,7 @@ class Pedido (object):
 
 
 
-class buffet (object):
+class Buffet (object):
     #eliminar alumno y profesor platos y pedidos
     #agregar alumno y profesor platos y pedidos
     #modificar alumno y profesor platos y pedidos
@@ -77,12 +77,12 @@ class buffet (object):
     def EliminarAlumno (self, alumno):
         self.alumnos.remove(alumno)
 
-    def ModificarAlumno (self, alumno, nombre = None, apellido = None, division = None):
-        for item in self.alumnos:
+    def ModificarAlumno (self, alumno, nombre, apellido, division):
+        for item in self.alumnos.nombre:
             if item == alumno:
-                if nombre != None: self.alumnos.nombre = nombre
-                if apellido != None: self.alumnos.apellido = apellido
-                if division != None: self.alumnos.division = division
+                self.alumnos.nombre = nombre
+                self.alumnos.apellido = apellido
+                self.alumnos.division = division
 
 #:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
     def AgregarProfesor(self, profesor):
@@ -91,12 +91,12 @@ class buffet (object):
     def EliminarProfesor(self, profesor):
         self.profesores.remove(profesor)
 
-    def ModificarProfesor (self, profesor, nombre = None, apellido = None, descuento = None):
+    def ModificarProfesor (self, profesor, nombre, apellido, descuento):
         for item in self.profesores:
             if item == profesor:
-                if nombre != None: self.profesores.nombre = nombre
-                if apellido != None: self.profesores.apellido = apellido
-                if descuento != None: self.profesores.descuento = descuento
+                self.profesores.nombre = nombre
+                self.profesores.apellido = apellido
+                self.profesores.descuento = descuento
 #:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
     def AgregarPlato(self, plato):
@@ -136,4 +136,4 @@ class buffet (object):
                 if self.pedidos.entregado == False:
                     self.platosdia.append (self.pedidos)
 
-
+        return self.platosdia
