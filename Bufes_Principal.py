@@ -23,24 +23,24 @@ buffet = Buffet ()
 
 def GuardarPersona (alumno = None, profesor = None):
     if profesor != None:
-        archivo = open ("profesor.txt", "w")
+        archivo = open ("profesor.txt", "a")
         for item in buffet.profesores:
-            archivo.write (item.nombre + "|" + item.apellido + "|" + item.descuento +'\n')
+            archivo.write (item.nombre + "|" + item.apellido + "|" + item.descuento +"\n")
         archivo.close ()
     if alumno != None:
-        archivo = open ("alumno.txt", "w")
+        archivo = open ("alumno.txt", "a")
         for item in buffet.alumnos:
             archivo.write (item.nombre + "|" + item.apellido + "|" + item.division + '\n')
         archivo.close ()
 
 def GuardarPlato ():
-    archivo = open ("plato.txt", "w")
+    archivo = open ("plato.txt", "a")
     for item in buffet.platos:
         archivo.write (item.nombre + "|" + item.precio + '\n')
     archivo.close ()
 
 def GuardarPedido ():
-    archivo = open ("pedido.txt", "w")
+    archivo = open ("pedido.txt", "a")
     for item in buffet.pedidos:
         archivo.write (item.nombre + "|" + item.fecha_creacion+ "|" + item.fecha_entrega + "|" + item.entregado + "|" + item.platos+ "|" + item.persona +'\n')
     archivo.close ()
@@ -51,7 +51,7 @@ def GuardarTodo ():
     GuardarPersona (alumno = 1, profesor = 1)
 
 def RecuperarDatos ():
-    archivo3 = open("pedido.txt", "r")
+    archivo3 = open("pedido.txt", "r+")
     for line in archivo3:
         pedido = Pedido()
         lista.append(line.split("|"))
@@ -64,7 +64,7 @@ def RecuperarDatos ():
         buffet.AgregarPedido(pedido)
     archivo3.close()
 
-    archivo2 = open("plato.txt", "r")
+    archivo2 = open("plato.txt", "r+")
     for line in archivo2:
         plato = Plato()
         lista.append(line.split("|"))
@@ -73,7 +73,7 @@ def RecuperarDatos ():
         buffet.AgregarPlato(plato)
     archivo2.close()
 
-    archivo1 = open("alumno.txt", "r")
+    archivo1 = open("alumno.txt", "r+")
     for line in archivo1:
         alumno = Alumno()
         lista.append(line.split("|"))
@@ -83,7 +83,7 @@ def RecuperarDatos ():
         buffet.AgregarAlumno(alumno)
     archivo1.close()
 
-    archivo = open("profesor.txt", "r")
+    archivo = open("profesor.txt", "r+")
     for line in archivo:
         profesor = Profesor()
         lista.append(line.split("|"))
