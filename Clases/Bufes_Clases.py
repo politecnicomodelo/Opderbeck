@@ -1,4 +1,4 @@
-class Persona(object):
+class Persona (object):
     nombre = ""
     apellido = ""
 
@@ -12,14 +12,14 @@ class Persona(object):
         self.descuento = descuento
 
 
-class Profesor(Persona):
+class Profesor (Persona):
     descuento = 0
 
     def setDescuento (self, descuento):
         self.descuento = descuento
 
 
-class Alumno(Persona):
+class Alumno (Persona):
     division = ""
 
     def setDivision (self, division):
@@ -88,7 +88,7 @@ class Buffet (object):
     def EliminarAlumno (self, alumno):
         for item in self.alumnos:
             if item.nombre == alumno:
-                self.alumnos.remove(alumno)
+                self.alumnos.remove (alumno)
 
     def ModificarAlumno (self, alumno, nombre, apellido, division):
         for item in self.alumnos.nombre:
@@ -98,8 +98,6 @@ class Buffet (object):
                 self.alumnos.division = division
 
 #:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-
-#::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
     def AgregarProfesor(self, profesor):
         self.profesores.append(profesor)
@@ -115,9 +113,8 @@ class Buffet (object):
                 self.profesores.nombre = nombre
                 self.profesores.apellido = apellido
                 self.profesores.descuento = descuento
-#:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
-#::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+#:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
     def AgregarPlato(self, plato):
         self.platos.append(plato)
@@ -134,8 +131,6 @@ class Buffet (object):
                 self.platos.precio = precio
 
 #:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-
-#::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
     def AgregarPedido(self, plato):
         self.pedidos.append(plato)
@@ -163,14 +158,18 @@ class Buffet (object):
                 if persona not in item.nombre:
                     return False
 
-        self.pedidos.entregado = entregado
-        self.pedidos.fecha_entrega = hora_entrega
-        self.pedidos.fecha_creacion = fecha_creacion
+        for item in self.pedidos:
+            if pedido == item.nombre:
+                self.pedidos.entregado = entregado
+                self.pedidos.fecha_entrega = hora_entrega
+                self.pedidos.fecha_creacion = fecha_creacion
+                self.pedidos.Plato = plato
+                self.pedidos.persona = persona
 
 #:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
     def PlatosDelDia(self, fecha):
         for item in self.pedidos:
-            if fecha == item.fecha_entrega:
-                if item.entregado == 0:
-                    self.platosdia.append (self.pedidos)
+            if fecha == item.fecha_entrega and item.entregado == 0:
+                self.platosdia.append (self.pedidos)
         return self.platosdia
