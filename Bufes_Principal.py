@@ -19,26 +19,28 @@ plato = Plato ()
 pedido = Pedido ()
 buffet = Buffet ()
 
+#def ComprobarActualizacion ():
+
 def GuardarPersona (alumno = None, profesor = None):
     if profesor != None:
-        archivo = open ("profesor.txt", "a")
+        archivo = open ("profesor.txt", "w")
         for item in buffet.profesores:
             archivo.write (item.nombre + "|" + item.apellido + "|" + item.descuento +'\n')
         archivo.close ()
     if alumno != None:
-        archivo = open ("alumno.txt", "a")
+        archivo = open ("alumno.txt", "w")
         for item in buffet.alumnos:
             archivo.write (item.nombre + "|" + item.apellido + "|" + item.division + '\n')
         archivo.close ()
 
 def GuardarPlato ():
-    archivo = open ("plato.txt", "a")
+    archivo = open ("plato.txt", "w")
     for item in buffet.platos:
         archivo.write (item.nombre + "|" + item.precio + '\n')
     archivo.close ()
 
 def GuardarPedido ():
-    archivo = open ("pedido.txt", "a")
+    archivo = open ("pedido.txt", "w")
     for item in buffet.pedidos:
         archivo.write (item.nombre + "|" + item.fecha_creacion+ "|" + item.fecha_entrega + "|" + item.entregado + "|" + item.platos+ "|" + item.persona +'\n')
     archivo.close ()
@@ -52,7 +54,7 @@ def RecuperarDatos ():
     archivo3 = open("pedido.txt", "r")
     for line in archivo3:
         pedido = Pedido()
-        lista = line.split("|")
+        lista.append(line.split("|"))
         pedido.setCreacion(lista[1])
         pedido.setEntrega(lista[2])
         pedido.Entregado(lista[3])
@@ -65,7 +67,7 @@ def RecuperarDatos ():
     archivo2 = open("plato.txt", "r")
     for line in archivo2:
         plato = Plato()
-        lista = line.split("|")
+        lista.append(line.split("|"))
         plato.setPlatoNombre(lista[0])
         plato.setPlatoPrecio(lista[1])
         buffet.AgregarPlato(plato)
@@ -74,7 +76,7 @@ def RecuperarDatos ():
     archivo1 = open("alumno.txt", "r")
     for line in archivo1:
         alumno = Alumno()
-        lista = line.split("|")
+        lista.append(line.split("|"))
         alumno.setDivision(lista[2])
         alumno.setNombre(lista[0])
         alumno.setApellido(lista[1])
@@ -84,7 +86,7 @@ def RecuperarDatos ():
     archivo = open("profesor.txt", "r")
     for line in archivo:
         profesor = Profesor()
-        lista = line.split("|")
+        lista.append(line.split("|"))
         profesor.setDescuento(lista[2])
         profesor.setNombre(lista[0])
         profesor.setApellido(lista[1])
