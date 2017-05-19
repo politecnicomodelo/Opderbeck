@@ -1,15 +1,24 @@
+from datetime import datetime, date, time, timedelta
+import calendar
+
+
+
 class Vuelos (object):
-    avion = "" #modelo unico del avion que se va a utilizar en sese vuelo
+    avion = None #modelo unico del avion que se va a utilizar en sese vuelo
     pasajeros = [] #lista de pasajeros de ese vuelo
     tripulantes = [] #lista de tripulantes que posee ese vuelo
     fecha = 0 #fecha de salida del vuelo
     hora = 0 #hora de salida del vuelo
     origen = "" #origen del vuelo
     destino = "" #destino al cual llega el vuelo
+    codigo_vuelo = 0
 
     def __init__(self):
-        pasajeros = []  # lista de pasajeros de ese vuelo
-        tripulantes = []  # lista de tripulantes que posee ese vuelo
+        self.pasajeros = []  # lista de pasajeros de ese vuelo
+        self.tripulantes = []  # lista de tripulantes que posee ese vuelo
+
+    def CodigoVuelo(self, codigo):
+        self.codigo_vuelo = codigo
 
     def setAvion (self, avion):
         self.avion = avion
@@ -33,10 +42,6 @@ class Vuelos (object):
         self.tripulantes.append (tripulante)
 
 
-
-
-
-
 class Aviones (object):
     modelo = "" #modelo unico de avion
     cant_pasajeros = 0 #cantidad de pasajeros que soporta el avion
@@ -57,8 +62,9 @@ class Aviones (object):
 class Persona (object):
     Nombre = ""
     Apellido = ""
-    FechadeNacimiento = 0
+    FechadeNacimiento = None
     DNI = 0
+    Edad = 0
 
     def setNombre (self, nombre):
         self.Nombre = nombre
@@ -74,11 +80,14 @@ class Persona (object):
 
 
 class Tripulacion (Persona):
-    modelo_permitido = 0
+    modelo_permitido = []
     idiomas = ""
 
+    def __init__(self):
+        self.modelo_permitido = []
+
     def setModeloPermitido (self, modelo):
-        self.modelo_permitido = modelo
+        self.modelo_permitido.append(modelo)
 
     def setIdiomas (self, idioma):
         self.idiomas = idioma
@@ -86,8 +95,8 @@ class Tripulacion (Persona):
 
 class Pasajero (Persona):
     cantidad_millas = 0
-    pasajero_vip = ""
-    necesidades_especiales = ""
+    pasajero_vip = 0
+    necesidades_especiales = None
 
 
     def setCantidadMillas (self, millas):
@@ -99,4 +108,9 @@ class Pasajero (Persona):
     def setNecesidadEspecial (self, necesidad):
         self.necesidades_especiales = necesidad
 
-
+    def CalcularEdad(self):
+        ahora = date.today()
+        print(self.FechadeNacimiento)
+        print(ahora)
+        self.Edad = ahora - self.FechadeNacimiento
+        return int(self.Edad)
