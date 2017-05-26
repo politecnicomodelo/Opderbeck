@@ -1,7 +1,4 @@
-from datetime import datetime, date, time, timedelta
-import calendar
-
-
+from datetime import date
 
 class Vuelos (object):
     avion = None #modelo unico del avion que se va a utilizar en sese vuelo
@@ -78,6 +75,16 @@ class Persona (object):
     def setDni (self, dni):
         self.DNI = dni
 
+    def CalcularEdad(self):
+        hoy = date.today()
+
+        fecha = self.FechadeNacimiento
+
+        año = fecha[0] + fecha[1] + fecha[2] + fecha[3]
+        self.Edad = hoy.year - int(año)
+
+        return self.Edad
+
 
 class Tripulacion (Persona):
     modelo_permitido = []
@@ -108,9 +115,4 @@ class Pasajero (Persona):
     def setNecesidadEspecial (self, necesidad):
         self.necesidades_especiales = necesidad
 
-    def CalcularEdad(self):
-        ahora = date.today()
-        print(self.FechadeNacimiento)
-        print(ahora)
-        self.Edad = ahora - self.FechadeNacimiento
-        return int(self.Edad)
+
