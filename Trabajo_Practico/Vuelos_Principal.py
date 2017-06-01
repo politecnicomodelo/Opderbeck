@@ -2,10 +2,10 @@ from Clases_Trabajo_Practico.Vuelos_Clases import *
 from datetime import datetime, date, time, timedelta
 import calendar
 
-tripulantes = []
-pasajeros = []
-aviones = []
-vuelos = []
+lista_tripulantes = []
+lista_pasajeros = []
+lista_aviones = []
+lista_vuelos = []
 
 pasajero = Pasajero ()
 tripulacion = Tripulacion()
@@ -30,7 +30,7 @@ def RecuperarDatos ():
             #if lista [6] == '\n' or listaaux [-1] == '\n':
              #   listaaux [-1] = ' '
             pasajero.setNecesidadEspecial (listaaux)
-            pasajeros.append (pasajero)
+            lista_pasajeros.append (pasajero)
         else:
             tripulacion = Tripulacion()
             tripulacion.setNombre(lista[1])
@@ -46,8 +46,10 @@ def RecuperarDatos ():
                 listaaux = lista[6]
                 #if listaaux == '\n' or listaaux[-1] == '\n':
                  #    listaaux[-1] = ""
-                tripulacion.setIdiomas (listaaux)
-            tripulantes.append (tripulacion)
+                listaaux = lista[6].split(",")
+                for item in listaaux:
+                    tripulacion.setIdiomas (listaaux)
+            lista_tripulantes.append (tripulacion)
     archivo.close ()
 
     archivo = open("aviones.dat", "r")
@@ -58,7 +60,7 @@ def RecuperarDatos ():
         avion.setModeloAvion (lista [0])
         avion.setCantidadPasajeros (lista [1])
         avion.setCantidadTripulacion (lista [2])
-        aviones.append (avion)
+        lista_aviones.append (avion)
     archivo.close ()
 
     archivo = open("vuelos.dat", "r")
@@ -70,98 +72,85 @@ def RecuperarDatos ():
         vuelo.HoraSalida (lista [2])
         vuelo.Origen (lista [3])
         vuelo.Destino (lista [4])
-        listaaux = lista [5].split(",")
-        for item in listaaux:
-            for item2 in pasajeros:
-                if item2.DNI == item:
-                    vuelo.setPasajeros (item2)
         listaaux = lista [6].split(",")
         for item in listaaux:
-            for item2 in tripulantes:
-                if item2.DNI == item:
-                    vuelo.setTripulantes (item2)
+            for item2 in lista_pasajeros:
+                if item2.DNI == int(item):
+                    vuelo.setPasajeros (item2)
+        listaaux = lista [5].split(",")
+        for item in listaaux:
+            for item2 in lista_tripulantes:
+                if int (item2.DNI) == int(item):
+                    vuelo.setTripulantes(item2)
         # if item [-1] == '\n':
         #   item [-1] = ""
         vuelo.CodigoVuelo(lista [7])
-        vuelos.append (vuelo)
+        lista_vuelos.append (vuelo)
     archivo.close ()
 
 
-
-
-def NominaPersonas ():
-    for vuelo1 in vuelos:
-        print("VUELO:", vuelo1.codigo_vuelo)
-        for pasajero2 in pasajeros:
-            if pasajero2.DNI not in  vuelo1.pasajeros:
-                print("PASAJERO", pasajero2.DNI)
-
-
-def PasajeroMasJoven ():
-    for vuelo in vuelos:
-        lista = []
-        for persona2 in pasajeros:
-            if persona2.DNI not in vuelo.pasajeros:
-                lista.append(persona2.CalcularEdad())
-        print (min(lista))
-
-
-def VuelosSinTripulacion ():
-    numero = 0
-    for vuelo in vuelos:
-        for avion in aviones:
-            if avion.modelo not in vuelo.avion:
-                if int(avion.cant_tripulacion) > len(vuelo.tripulantes):
-                    print ("VUELO:", vuelo.codigo_vuelo)
-
-
 def PasajerosEspeciales ():
-    for item in vuelos:
-        for item2 in pasajeros:
-            if item2 not in item.pasajeros:
-                if item2.necesidades_especiales != None:
-                    if item2.pasajero_vip != 0:
-                        print("PASAJERO VIP: ", item2.DNI)
-                    else :
-                        print ("PASAJERO: ", item2.DNI)
-                    print ("NECESIDAD: ", item2.necesidades_especiales)
-                elif item2.pasajero_vip != 0:
+    listavip = []
+    lista = []
+    for item in lista_vuelos:
+        for item2 in lista_pasajeros:
+            if item2 not in item.lista_pasajeros:
+                if item2.pasajero_vip != 0:
+                    if item2.necesidades_especiales != None:
+                        print ("NECESIDAD: ", item2.necesidades_especiales)
+                        listavip.append (item2.necesidades_especiales)
                     print("PASAJERO VIP: ", item2.DNI)
+                    listavip.append(item2.DNI)
+                else :
+                    if item2.necesidades_especiales != None:
+                        print ("NECESIDAD: ", item2.necesidades_especiales)
+                        lista.append (item2.necesidades_especiales)
+                    print ("PASAJERO: ", item2.DNI)
+                    lista.append (item2.DNI)
 
 
 def TripulacionNoAutorizada ():
-    for vuelo in vuelos:
+    lista = []
+    for vuelo in lista_vuelos:
         print ("VUELO:", vuelo.codigo_vuelo)
-        for tripulante in tripulantes:
-            if tripulante.DNI not in vuelo.tripulantes:
-                for modelo in tripulante.modelo_permitido:
-                    if vuelo.avion == modelo:
-                        print ("TRIPULANTE", tripulante.DNI)
-
+        lista.append (vuelo.codigo_vuelo)
+        for tripulante in lista_tripulantes:
+            if tripulante.DNI not in vuelo.lista_tripulantes:
+                if vuelo.avion not in tripulante.modelo_permitido:
+                    print ("TRIPULANTE", tripulante.DNI)
+                    lista.append(tripulante.DNI)
 
 def TripulacionRompeRegla ():
 
-    for vuelo1 in vuelos:
+    for vuelo1 in lista_vuelos:
         lista = []
-        for vuelo2 in vuelos:
+        for vuelo2 in lista_vuelos:
             if vuelo1.fecha == vuelo2.fecha:
                 if vuelo1.codigo_vuelo != vuelo2.codigo_vuelo:
-                    for tripulante1 in vuelo1.tripulantes:
-                        for tripulante2 in vuelo2.tripulantes:
+                    for tripulante1 in vuelo1.lista_tripulantes:
+                        for tripulante2 in vuelo2.lista_tripulantes:
                             if tripulante1.DNI == tripulante2.DNI:
-                                lista.append(tripulante1.DNI)
+                                if tripulante1.DNI not in lista:
+                                    lista.append(tripulante1.DNI)
 
         print("VUELO:", vuelo1.codigo_vuelo)
         for item in lista:
             print ("TRIPULANTE: ", item)
 
-
-
 RecuperarDatos ()
 
-#NominaPersonas ()
-#PasajeroMasJoven ()
-#VuelosSinTripulacion ()
-PasajerosEspeciales ()
+
+
+#vuelo.PasajeroMasJoven()
+vuelo.NominaPersonas()
+
+for item in lista_vuelos:
+
+    for item2 in lista_aviones:
+        if item.avion == item2.modelo:
+            if int (item2.cant_tripulacion) < item.VuelosSinTripulacion ():
+                break
+
+#PasajerosEspeciales ()
 #TripulacionNoAutorizada ()
 #TripulacionRompeRegla ()

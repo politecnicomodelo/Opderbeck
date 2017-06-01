@@ -2,8 +2,8 @@ from datetime import date
 
 class Vuelos (object):
     avion = None #modelo unico del avion que se va a utilizar en sese vuelo
-    pasajeros = [] #lista de pasajeros de ese vuelo
-    tripulantes = [] #lista de tripulantes que posee ese vuelo
+    lista_pasajeros = [] #lista de pasajeros de ese vuelo
+    lista_tripulantes = [] #lista de tripulantes que posee ese vuelo
     fecha = 0 #fecha de salida del vuelo
     hora = 0 #hora de salida del vuelo
     origen = "" #origen del vuelo
@@ -11,8 +11,8 @@ class Vuelos (object):
     codigo_vuelo = 0
 
     def __init__(self):
-        self.pasajeros = []  # lista de pasajeros de ese vuelo
-        self.tripulantes = []  # lista de tripulantes que posee ese vuelo
+        self.lista_pasajeros = []  # lista de pasajeros de ese vuelo
+        self.lista_tripulantes = []  # lista de tripulantes que posee ese vuelo
 
     def CodigoVuelo(self, codigo):
         self.codigo_vuelo = codigo
@@ -33,10 +33,23 @@ class Vuelos (object):
         self.destino = destino
 
     def setPasajeros (self, pasajero):
-        self.pasajeros.append(pasajero)
+        self.lista_pasajeros.append(pasajero)
 
     def setTripulantes (self, tripulante):
-        self.tripulantes.append (tripulante)
+        self.lista_tripulantes.append(tripulante)
+
+    def NominaPersonas (self):
+        lista = []
+        for pasajero in self.lista_pasajeros:
+            lista.append(pasajero)
+        for item in lista:
+            print (item.nombre)
+        return lista
+
+    def VuelosSinTripulacion(self):
+        return len(self.lista_tripulantes)
+
+
 
 
 class Aviones (object):
@@ -77,9 +90,7 @@ class Persona (object):
 
     def CalcularEdad(self):
         hoy = date.today()
-
         fecha = self.FechadeNacimiento
-
         año = fecha[0] + fecha[1] + fecha[2] + fecha[3]
         self.Edad = hoy.year - int(año)
 
@@ -88,7 +99,7 @@ class Persona (object):
 
 class Tripulacion (Persona):
     modelo_permitido = []
-    idiomas = ""
+    idiomas = []
 
     def __init__(self):
         self.modelo_permitido = []
@@ -97,7 +108,7 @@ class Tripulacion (Persona):
         self.modelo_permitido.append(modelo)
 
     def setIdiomas (self, idioma):
-        self.idiomas = idioma
+        self.idiomas.append(idioma)
 
 
 class Pasajero (Persona):
@@ -114,5 +125,6 @@ class Pasajero (Persona):
 
     def setNecesidadEspecial (self, necesidad):
         self.necesidades_especiales = necesidad
+
 
 
