@@ -75,7 +75,7 @@ def RecuperarDatos ():
         listaaux = lista [6].split(",")
         for item in listaaux:
             for item2 in lista_pasajeros:
-                if item2.DNI == int(item):
+                if item2.DNI == item:
                     vuelo.setPasajeros (item2)
         listaaux = lista [5].split(",")
         for item in listaaux:
@@ -84,10 +84,10 @@ def RecuperarDatos ():
                     vuelo.setTripulantes(item2)
         # if item [-1] == '\n':
         #   item [-1] = ""
-        vuelo.CodigoVuelo(lista [7])
+        vuelo.CodigoVuelo(lista[7])
         lista_vuelos.append (vuelo)
     archivo.close ()
-
+########################################################################################################################
 
 def PasajerosEspeciales ():
     listavip = []
@@ -97,28 +97,31 @@ def PasajerosEspeciales ():
             if item2 not in item.lista_pasajeros:
                 if item2.pasajero_vip != 0:
                     if item2.necesidades_especiales != None:
-                        print ("NECESIDAD: ", item2.necesidades_especiales)
+                        #print ("NECESIDAD: ", item2.necesidades_especiales)
                         listavip.append (item2.necesidades_especiales)
-                    print("PASAJERO VIP: ", item2.DNI)
+                    #print("PASAJERO VIP: ", item2.DNI)
                     listavip.append(item2.DNI)
                 else :
                     if item2.necesidades_especiales != None:
-                        print ("NECESIDAD: ", item2.necesidades_especiales)
+                        #print ("NECESIDAD: ", item2.necesidades_especiales)
                         lista.append (item2.necesidades_especiales)
-                    print ("PASAJERO: ", item2.DNI)
+                    #print ("PASAJERO: ", item2.DNI)
                     lista.append (item2.DNI)
-
+    return lista, listavip#hay dos listas el vip y el normal con cada lista tambien estan las nececidades de cada persona
+########################################################################################################################
 
 def TripulacionNoAutorizada ():
     lista = []
     for vuelo in lista_vuelos:
-        print ("VUELO:", vuelo.codigo_vuelo)
+        #print ("VUELO:", vuelo.codigo_vuelo)
         lista.append (vuelo.codigo_vuelo)
         for tripulante in lista_tripulantes:
             if tripulante.DNI not in vuelo.lista_tripulantes:
                 if vuelo.avion not in tripulante.modelo_permitido:
-                    print ("TRIPULANTE", tripulante.DNI)
+                    #print ("TRIPULANTE", tripulante.DNI)
                     lista.append(tripulante.DNI)
+    return lista#devuelve el codigo del vuelo y los tripulantes no autorizados
+########################################################################################################################
 
 def TripulacionRompeRegla ():
 
@@ -133,24 +136,89 @@ def TripulacionRompeRegla ():
                                 if tripulante1.DNI not in lista:
                                     lista.append(tripulante1.DNI)
 
-        print("VUELO:", vuelo1.codigo_vuelo)
-        for item in lista:
-            print ("TRIPULANTE: ", item)
+        #print("VUELO:", vuelo1.codigo_vuelo)
+        #for item in lista:
+            #print ("TRIPULANTE: ", item)
+    return lista #devuelve los tripulantes que vuelan dos veces en el mismo dia
+########################################################################################################################
+
+def PasajeroMasJoven():
+    listaaux = []
+    for pasajero in lista_vuelos:
+        lista = []
+        for pasajero2 in pasajero.lista_pasajeros:
+            edad = pasajero2.CalcularEdad()
+            lista.append(edad)
+        listaaux = min(lista)
+    return listaaux#te devuelve las edades minimas de cada vuelo
+########################################################################################################################
+
+def VuelosSinTripulantes():
+    lista = []
+    for item in lista_vuelos:
+        for item2 in lista_aviones:
+            if item.avion == item2.modelo:
+                if int (item2.cant_tripulacion) < item.VuelosSinTripulacion ():
+                    lista.append(item.codigo_vuelo)
+    return lista#devuelve los vuelos en los cuales no hay tripulacion suficiente(codigo vuelo)
+########################################################################################################################
+
+def NominaPersonas ():
+    lista = []
+    for vuelo in lista_vuelos:
+        lista.append(vuelo.codigo_vuelo)
+        for pasajero in vuelo.lista_pasajeros:
+            lista.append(pasajero.DNI)
+    return lista
+########################################################################################################################
+
+def MostrarTodoHermoso ():
+    codigos = []
+    lista_dni = []
+    lista = NominaPersonas()
+    print (lista)
+    #print ("{: >10} {: >10} {: >10}".format(*))
+########################################################################################################################
+#mostrar nomina de los pasajeros por vuelo
+    for vuelo in lista_vuelos:
+        codigos.append(vuelo.codigo_vuelo)
+
+    for codigo in codigos:
+        for codigo2 in codigos:
+            for valor in lista:
+                if valor == codigo:
+                    for valor in lista:
+                        if valor == codigo2 and valor != codigo:
+                            lista_dni.append(valor)
+                    print("{: >10}".format(*lista_dni))
+########################################################################################################################
+
+#mostar el pasajeros jovenes
+########################################################################################################################
+
+#mostrat pasajeros especiales
+########################################################################################################################
+
+#mostrar tripulacion que no esta eautorizada a volar
+########################################################################################################################
+
+#mostrar tripulacion que rompe las reglas
+########################################################################################################################
+
+
+########################################################################################################################
 
 RecuperarDatos ()
 
+NominaPersonas()
 
+PasajeroMasJoven()
 
-#vuelo.PasajeroMasJoven()
-vuelo.NominaPersonas()
+PasajerosEspeciales ()
 
-for item in lista_vuelos:
+TripulacionNoAutorizada ()
 
-    for item2 in lista_aviones:
-        if item.avion == item2.modelo:
-            if int (item2.cant_tripulacion) < item.VuelosSinTripulacion ():
-                break
+TripulacionRompeRegla ()
 
-#PasajerosEspeciales ()
-#TripulacionNoAutorizada ()
-#TripulacionRompeRegla ()
+MostrarTodoHermoso()
+########################################################################################################################

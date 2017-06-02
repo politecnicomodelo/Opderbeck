@@ -1,5 +1,7 @@
 from datetime import date
 
+
+########################################################################################################################
 class Vuelos (object):
     avion = None #modelo unico del avion que se va a utilizar en sese vuelo
     lista_pasajeros = [] #lista de pasajeros de ese vuelo
@@ -14,44 +16,44 @@ class Vuelos (object):
         self.lista_pasajeros = []  # lista de pasajeros de ese vuelo
         self.lista_tripulantes = []  # lista de tripulantes que posee ese vuelo
 
+
     def CodigoVuelo(self, codigo):
         self.codigo_vuelo = codigo
+
 
     def setAvion (self, avion):
         self.avion = avion
 
+
     def FechaSalida(self, fecha):
         self.fecha = fecha
+
 
     def HoraSalida(self, hora):
         self.hora = hora
 
+
     def Origen(self, origen):
         self.origen = origen
+
 
     def Destino(self, destino):
         self.destino = destino
 
+
     def setPasajeros (self, pasajero):
         self.lista_pasajeros.append(pasajero)
+
 
     def setTripulantes (self, tripulante):
         self.lista_tripulantes.append(tripulante)
 
-    def NominaPersonas (self):
-        lista = []
-        for pasajero in self.lista_pasajeros:
-            lista.append(pasajero)
-        for item in lista:
-            print (item.nombre)
-        return lista
 
-    def VuelosSinTripulacion(self):
+    def VuelosSinTripulacion (self):
         return len(self.lista_tripulantes)
 
 
-
-
+########################################################################################################################
 class Aviones (object):
     modelo = "" #modelo unico de avion
     cant_pasajeros = 0 #cantidad de pasajeros que soporta el avion
@@ -69,6 +71,7 @@ class Aviones (object):
     #metodo que compruebe que el modelo es unico de ese avion
 
 
+########################################################################################################################
 class Persona (object):
     Nombre = ""
     Apellido = ""
@@ -91,12 +94,12 @@ class Persona (object):
     def CalcularEdad(self):
         hoy = date.today()
         fecha = self.FechadeNacimiento
-        año = fecha[0] + fecha[1] + fecha[2] + fecha[3]
+        año = fecha[6] + fecha[7] + fecha[8] + fecha[9]
         self.Edad = hoy.year - int(año)
-
         return self.Edad
 
 
+########################################################################################################################
 class Tripulacion (Persona):
     modelo_permitido = []
     idiomas = []
@@ -111,6 +114,7 @@ class Tripulacion (Persona):
         self.idiomas.append(idioma)
 
 
+########################################################################################################################
 class Pasajero (Persona):
     cantidad_millas = 0
     pasajero_vip = 0
