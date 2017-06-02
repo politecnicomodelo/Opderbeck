@@ -20,24 +20,26 @@ def RecuperarDatos ():
     for line in archivo:
         lista = line.split("|")
         if lista [0] == 'Pasajero':
-            pasajero = Pasajero ()
-            pasajero.setNombre (lista [1])
-            pasajero.setApellido (lista [2])
-            pasajero.setFechaNacimiento (lista [3])
-            pasajero.setDni (lista [4])
-            pasajero.setPasajeroVip (lista [5])
-            listaaux = lista[6]
-            #if lista [6] == '\n' or listaaux [-1] == '\n':
-             #   listaaux [-1] = ' '
-            pasajero.setNecesidadEspecial (listaaux)
-            lista_pasajeros.append (pasajero)
+            if lista[4] not in lista_pasajeros:
+                pasajero = Pasajero ()
+                pasajero.setNombre (lista [1])
+                pasajero.setApellido (lista [2])
+                pasajero.setFechaNacimiento (lista [3])
+                pasajero.setDni (lista [4])
+                pasajero.setPasajeroVip (lista [5])
+                listaaux = lista[6]
+                #if lista [6] == '\n' or listaaux [-1] == '\n':
+                 #   listaaux [-1] = ' '
+                pasajero.setNecesidadEspecial (listaaux)
+                lista_pasajeros.append (pasajero)
         else:
-            tripulacion = Tripulacion()
-            tripulacion.setNombre(lista[1])
-            tripulacion.setApellido (lista [2])
-            tripulacion.setFechaNacimiento (lista [3])
-            tripulacion.setDni (lista [4])
-            listaaux = lista[5].split(",")
+            if lista[4] not in lista_tripulantes:
+                tripulacion = Tripulacion()
+                tripulacion.setNombre(lista[1])
+                tripulacion.setApellido (lista [2])
+                tripulacion.setFechaNacimiento (lista [3])
+                tripulacion.setDni (lista [4])
+                listaaux = lista[5].split(",")
             for item in listaaux:
                 #if item == '\n' or item[-1] == '\n':
                  #   item[-1] = ""
@@ -120,13 +122,13 @@ def TripulacionNoAutorizada ():
                 if vuelo.avion not in tripulante.modelo_permitido:
                     #print ("TRIPULANTE", tripulante.DNI)
                     lista.append(tripulante.DNI)
+    print (lista)
     return lista#devuelve el codigo del vuelo y los tripulantes no autorizados
 ########################################################################################################################
 
 def TripulacionRompeRegla ():
-
+    lista = []
     for vuelo1 in lista_vuelos:
-        lista = []
         for vuelo2 in lista_vuelos:
             if vuelo1.fecha == vuelo2.fecha:
                 if vuelo1.codigo_vuelo != vuelo2.codigo_vuelo:
@@ -149,7 +151,7 @@ def PasajeroMasJoven():
         for pasajero2 in pasajero.lista_pasajeros:
             edad = pasajero2.CalcularEdad()
             lista.append(edad)
-        listaaux = min(lista)
+        listaaux.append(min(lista))
     return listaaux#te devuelve las edades minimas de cada vuelo
 ########################################################################################################################
 
@@ -158,7 +160,7 @@ def VuelosSinTripulantes():
     for item in lista_vuelos:
         for item2 in lista_aviones:
             if item.avion == item2.modelo:
-                if int (item2.cant_tripulacion) < item.VuelosSinTripulacion ():
+                if int (item2.cant_tripulacion) > item.VuelosSinTripulacion():
                     lista.append(item.codigo_vuelo)
     return lista#devuelve los vuelos en los cuales no hay tripulacion suficiente(codigo vuelo)
 ########################################################################################################################
@@ -172,38 +174,113 @@ def NominaPersonas ():
     return lista
 ########################################################################################################################
 
+########################################################################################################################
 def MostrarTodoHermoso ():
-    codigos = []
-    lista_dni = []
+    codigos = ""
+    lista_dni = ""
+    lista_cabecera = []
     lista = NominaPersonas()
-    print (lista)
     #print ("{: >10} {: >10} {: >10}".format(*))
 ########################################################################################################################
+    print("###########################################################################################################")
+    print ("mostrar nomina de los pasajeros por vuelo")
 #mostrar nomina de los pasajeros por vuelo
+    lista_cabecera.append("CODIGO VUELO")
+    lista_cabecera.append("DNI ")
+    print("{: >5} {: >12}".format(*lista_cabecera))
     for vuelo in lista_vuelos:
-        codigos.append(vuelo.codigo_vuelo)
+        lista_dni = ""
+        for pasajero in vuelo.lista_pasajeros:
+            codigos = vuelo.codigo_vuelo
+            lista_dni = pasajero.DNI
+            print("{: >5} {: >20}".format(*codigos, lista_dni))
 
-    for codigo in codigos:
-        for codigo2 in codigos:
-            for valor in lista:
-                if valor == codigo:
-                    for valor in lista:
-                        if valor == codigo2 and valor != codigo:
-                            lista_dni.append(valor)
-                    print("{: >10}".format(*lista_dni))
 ########################################################################################################################
-
+    print ("###########################################################################################################")
+    print ("mostar el pasajeros jovenes")
 #mostar el pasajeros jovenes
-########################################################################################################################
+    lista_cabecera = []
+    lista_dni = []
+    lista_cabecera.append ("CODIGO VUELO")
+    lista_cabecera.append ("EDADES")
+    #lista_cabecera.append ("DNI")
+    print ("{: >5} {: >10}".format(*lista_cabecera))
+    lista = PasajeroMasJoven()
+    for item in lista_vuelos:
+        for item2 in item.lista_pasajeros:
+            edad = item2.CalcularEdad()
+            for item3 in lista:
+                if edad == item3:
+                    lista_dni.append (item2.DNI)
+    for item in lista_vuelos:
+        for lista2 in lista:
+            for lista_dni2 in lista_dni:
+                lista_Todo = [item.codigo_vuelo, lista2]
+        print("{: >6} {: >13}".format(*lista_Todo))
 
+########################################################################################################################
+    print("###########################################################################################################")
+    print ("mostra pasajeros especiales")
 #mostrat pasajeros especiales
+    novip = []
+    vip = []
+    novip, vip = PasajerosEspeciales()
+    lista = VuelosSinTripulantes()
+
+    lista_cabecera = []
+    lista_cabecera.append("PASAJERO VIP")
+    lista_cabecera.append("NECESIDAD")
+    print("{: >5}, {: >15}".format(*lista_cabecera))
+    #for item in vip:
+        #if item != '\n':
+            #print("{: >5} {: >15}".format(*))
+    lista_cabecera = []
+    lista_cabecera.append("PASAJERO NO VIP")
+    lista_cabecera.append("NECESIDAD")
+    print("{: >5}, {: >15}".format(*lista_cabecera))
+    #for item in novip:
+        #if item != '\n':
+            #print("{: >5}, {: >15}".format(*item))
+########################################################################################################################
+    print ("###########################################################################################################")
+    print ("mostrar tripulacion insuficiente")
+#mostrar tripulacion insuficiente
+    lista_cabecera = []
+    lista = VuelosSinTripulantes()
+    lista_cabecera.append("CODIGO VUELO")
+    print("{: >5}".format(*lista_cabecera))
+    for item in lista:
+        print ("{: >5}".format(*item))
+
 ########################################################################################################################
 
-#mostrar tripulacion que no esta eautorizada a volar
+#mostrar tripulacion que no esta autorizada a volar
+    print("###########################################################################################################")
+    print("mostrar tripulacion que no esta autorizada a volar")
+    lista = TripulacionNoAutorizada()
+    codigos = []
+    for item in lista_vuelos:
+        codigos.append(item.codigo_vuelo)
+    lista_cabecera = []
+    lista_cabecera.append("CODIGO VUELO")
+    lista_cabecera.append("TRIPULANTES")
+    print("{: >5} {: >15}".format(*lista_cabecera))
+    for item in lista:
+        if item not in codigos:
+            print("{: >25}".format(item))
+        else:
+            print(":::::{: >0}:::::::::::::::::::".format(item))
 ########################################################################################################################
-
+    print("###########################################################################################################")
+    print ("#mostrar tripulacion que rompe las reglas")
 #mostrar tripulacion que rompe las reglas
-########################################################################################################################
+    lista_cabecera = []
+    lista = TripulacionRompeRegla()
+    lista_cabecera.append("TRIPULANTE")
+    print("{: >5} ".format(*lista_cabecera))
+
+    for item in lista:
+        print(" {: >5}".format(item))
 
 
 ########################################################################################################################
