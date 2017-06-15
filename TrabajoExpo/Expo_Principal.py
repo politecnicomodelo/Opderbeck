@@ -1,6 +1,7 @@
 import pygame
 
 pygame.init()
+
 screen = (500,500)
 pantalla = pygame.display.set_mode(screen)
 
@@ -25,6 +26,7 @@ derecha = pygame.Rect (310,5,10,310)
 
 sentido = True
 sentido1 = True
+
 vy1 = 0
 vy2 = 0
 vx = 5
@@ -32,6 +34,7 @@ vy = 5
 
 puntos1 = "0"
 puntos2 = "0"
+
 fuente = pygame.font.SysFont("Arial", 20, True, False)
 texto1 = fuente.render(puntos1, 0, negro)
 texto2 = fuente.render(puntos2, 0, negro)
@@ -87,7 +90,7 @@ while fin != True:
     jugador1.move_ip(0, vy1)
     jugador2.move_ip(0, vy2)
     pelota.move_ip (vx, vy)
-    seguir = ""
+
 
     if pelota.colliderect (izquierda):
         pelota.y = 150
@@ -139,7 +142,9 @@ while fin != True:
 
     pelota.move_ip(vx, vy)
     clock.tick(fps)
+
     pantalla.fill(blanco)
+
     pantalla.blit(texto3, (230, 350))
     pantalla.blit(texto3, (0, 350))
     pantalla.blit(texto1, (300, 350))
@@ -151,13 +156,8 @@ while fin != True:
     pygame.draw.rect(pantalla, negro, izquierda)
     pygame.draw.rect(pantalla, negro, derecha)
     pygame.draw.rect(pantalla, negro, pelota)
+
     pygame.display.update()
-
-
-
-
-
-
 
 
 pygame.quit()
