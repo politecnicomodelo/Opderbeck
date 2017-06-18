@@ -1,34 +1,10 @@
 import pygame
 pygame.init()
 
-
-"""def CargarImagenes():
-    # cargado de imagenes_______________________________________________________________________________________________
-    PersonajeFrente = pygame.image.load("PersonajeFrente.png").convert_alpha()
-    PersonajeFrenteCaminando1 = pygame.image.load("PersonajeFrenteCaminando1.png").convert_alpha()
-    PersonajeFrenteCaminando2 = pygame.image.load("PersonajeFrenteCaminando2.png").convert_alpha()
-    PersonajeEspalda = pygame.image.load("PersonajeEspalda.png").convert_alpha()
-    PersonajeEspaldaCaminando1 = pygame.image.load("PersonajeEspaldaCaminando1.png").convert_alpha()
-    PersonajeEspaldaCaminando2 = pygame.image.load("PersonajeEspaldaCaminando2.png").convert_alpha()
-    PersonajeDerecha = pygame.image.load("PersonajeDerecha.png").convert_alpha()
-    PersonajeDerechaCaminando1 = pygame.image.load("PersonajeDerechaCaminando1.png").convert_alpha()
-    PersonajeDerechaCaminando2 = pygame.image.load("PersonajeDerechaCaminando2.png").convert_alpha()
-    PersonajeIzquierda = pygame.image.load("PersonajeIzquierda.png").convert_alpha()
-    PersonajeIzquierdaCaminando1 = pygame.image.load("PersonajeIzquierdaCaminando1.png").convert_alpha()
-    PersonajeIzquierdaCaminando2 = pygame.image.load("PersonajeIzquierdaCaminando2.png").convert_alpha()
-
-    #fondo = pygame.image.load("").convert_alpha()
-
-    lista = [[PersonajeFrente, PersonajeFrenteCaminando1, PersonajeFrenteCaminando2],
-            [PersonajeEspalda, PersonajeEspaldaCaminando1, PersonajeEspaldaCaminando2],
-            [PersonajeDerecha, PersonajeDerechaCaminando1, PersonajeDerechaCaminando2],
-            [PersonajeIzquierda, PersonajeIzquierdaCaminando1, PersonajeIzquierdaCaminando2]]
-    return lista"""""
-
 class Fondo(pygame.sprite.Sprite):
 
     def __init__(self):
-        self.fondo = pygame.image.load("FondoPueblo.png").convert_alpha()
+        self.fondo = pygame.image.load("imagenes/FondoPueblo.png").convert_alpha()
         self.rect = self.fondo.get_rect()
 
     def update(self, screen, velocidadx, velocidady):
@@ -39,23 +15,35 @@ class Player(pygame.sprite.Sprite):
 
     def __init__(self):
         # cargado de imagenes___________________________________________________________________________________________
-        self.PersonajeFrente = pygame.image.load("PersonajeFrente.png").convert_alpha()
-        self.PersonajeFrenteCaminando1 = pygame.image.load("PersonajeFrenteCaminando1.png").convert_alpha()
-        self.PersonajeFrenteCaminando2 = pygame.image.load("PersonajeFrenteCaminando2.png").convert_alpha()
-        self.PersonajeEspalda = pygame.image.load("PersonajeEspalda.png").convert_alpha()
-        self.PersonajeEspaldaCaminando1 = pygame.image.load("PersonajeEspaldaCaminando1.png").convert_alpha()
-        self.PersonajeEspaldaCaminando2 = pygame.image.load("PersonajeEspaldaCaminando2.png").convert_alpha()
-        self.PersonajeDerecha = pygame.image.load("PersonajeDerecha.png").convert_alpha()
-        self.PersonajeDerechaCaminando1 = pygame.image.load("PersonajeDerechaCaminando1.png").convert_alpha()
-        self.PersonajeDerechaCaminando2 = pygame.image.load("PersonajeDerechaCaminando2.png").convert_alpha()
-        self.PersonajeIzquierda = pygame.image.load("PersonajeIzquierda.png").convert_alpha()
-        self.PersonajeIzquierdaCaminando1 = pygame.image.load("PersonajeIzquierdaCaminando1.png").convert_alpha()
-        self.PersonajeIzquierdaCaminando2 = pygame.image.load("PersonajeIzquierdaCaminando2.png").convert_alpha()
+        self.PersonajeFrente = pygame.image.load("imagenes/PersonajeFrente.png").convert_alpha()
+        self.PersonajeFrente = self.SacarFondo(self.PersonajeFrente)
+        self.PersonajeFrenteCaminando1 = pygame.image.load("imagenes/PersonajeFrenteCaminando1.png").convert_alpha()
+        self.PersonajeFrenteCaminando1 = self.SacarFondo(self.PersonajeFrenteCaminando1)
+        self.PersonajeFrenteCaminando2 = pygame.image.load("imagenes/PersonajeFrenteCaminando2.png").convert_alpha()
+        self.PersonajeFrenteCaminando2 = self.SacarFondo(self.PersonajeFrenteCaminando2)
+        self.PersonajeEspalda = pygame.image.load("imagenes/PersonajeEspalda.png").convert_alpha()
+        self.PersonajeEspalda = self.SacarFondo(self.PersonajeEspalda)
+        self.PersonajeEspaldaCaminando1 = pygame.image.load("imagenes/PersonajeEspaldaCaminando1.png").convert_alpha()
+        self.PersonajeEspaldaCaminando1 = self.SacarFondo(self.PersonajeEspaldaCaminando1)
+        self.PersonajeEspaldaCaminando2 = pygame.image.load("imagenes/PersonajeEspaldaCaminando2.png").convert_alpha()
+        self.PersonajeEspaldaCaminando2 = self.SacarFondo(self.PersonajeEspaldaCaminando2)
+        self.PersonajeDerecha = pygame.image.load("imagenes/PersonajeDerecha.png").convert_alpha()
+        self.PersonajeDerecha = self.SacarFondo(self.PersonajeDerecha)
+        self.PersonajeDerechaCaminando1 = pygame.image.load("imagenes/PersonajeDerechaCaminando1.png").convert_alpha()
+        self.PersonajeDerechaCaminando1 = self.SacarFondo(self.PersonajeDerechaCaminando1)
+        self.PersonajeDerechaCaminando2 = pygame.image.load("imagenes/PersonajeDerechaCaminando2.png").convert_alpha()
+        self.PersonajeDerechaCaminando2 = self.SacarFondo(self.PersonajeDerechaCaminando2)
+        self.PersonajeIzquierda = pygame.image.load("imagenes/PersonajeIzquierda.png").convert_alpha()
+        self.PersonajeIzquierda = self.SacarFondo(self.PersonajeIzquierda)
+        self.PersonajeIzquierdaCaminando1 = pygame.image.load("imagenes/PersonajeIzquierdaCaminando1.png").convert_alpha()
+        self.PersonajeIzquierdaCaminando1 = self.SacarFondo(self.PersonajeIzquierdaCaminando1)
+        self.PersonajeIzquierdaCaminando2 = pygame.image.load("imagenes/PersonajeIzquierdaCaminando2.png").convert_alpha()
+        self.PersonajeIzquierdaCaminando2 = self.SacarFondo(self.PersonajeIzquierdaCaminando2)
 
         self.listImages = [[self.PersonajeFrente, self.PersonajeFrenteCaminando1, self.PersonajeFrenteCaminando2],
-                              [self.PersonajeEspalda, self.PersonajeEspaldaCaminando1, self.PersonajeEspaldaCaminando2],
-                              [self.PersonajeDerecha, self.PersonajeDerechaCaminando1, self.PersonajeDerechaCaminando2],
-                              [self.PersonajeIzquierda, self.PersonajeIzquierdaCaminando1, self.PersonajeIzquierdaCaminando2]]
+                            [self.PersonajeEspalda, self.PersonajeEspaldaCaminando1, self.PersonajeEspaldaCaminando2],
+                            [self.PersonajeDerecha, self.PersonajeDerechaCaminando1, self.PersonajeDerechaCaminando2],
+                            [self.PersonajeIzquierda, self.PersonajeIzquierdaCaminando1, self.PersonajeIzquierdaCaminando2]]
 
         self.currentImage = 0
         self.image = self.listImages[0][self.currentImage]
@@ -66,15 +54,21 @@ class Player(pygame.sprite.Sprite):
         self.motion = False
         self.orientation = 0
 
+    def SacarFondo(self, image):
+        image = image.convert()
+        color = image.get_at((0, 0))
+        image.set_colorkey(color)
+        return image
+
     def MovePJ(self, velocidadx, velocidady):
         self.rect.move_ip(velocidadx, velocidady)
 
     def Update(self, screen, velocidadx, velocidady):
+        screen.blit(self.image, self.rect)
         if (velocidadx, velocidady) == (0, 0):
             self.motion = False
             self.currentImage = 0
-        else:
-            self.motion = True
+        else: self.motion = True
         if velocidady > 0:
             self.orientation = 0
             if self.motion:
@@ -167,6 +161,7 @@ def main():
                     else: vy = 0
 
         clock.tick(fps)
+        screen.fill(white)
         fondo.update(screen, vx, vy)
         player.update(screen, vx, vy)
         pygame.display.update()
