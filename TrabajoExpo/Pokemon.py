@@ -4,14 +4,15 @@ pygame.init()
 class Fondo(pygame.sprite.Sprite):
 
     def __init__(self):
-        self.fondo = pygame.image.load("imagenes/FondoPueblo.png").convert_alpha()
+        self.fondo = pygame.image.load("imagenes/FondoPuebloAmpliado.png").convert_alpha()
         self.rect = self.fondo.get_rect()
 
-    def update(self, screen, velocidadx, velocidady):
+    def Update(self, screen, velocidadx, velocidady):
         self.rect.move_ip(-velocidadx, -velocidady)
         screen.blit(self.fondo, self.rect)
 
 class Player(pygame.sprite.Sprite):
+
 
     def __init__(self):
         # cargado de imagenes___________________________________________________________________________________________
@@ -49,7 +50,7 @@ class Player(pygame.sprite.Sprite):
         self.image = self.listImages[0][self.currentImage]
 
         self.rect = self.image.get_rect()
-        self.rect.top, self.rect.left = (50, 50)
+        self.rect.top, self.rect.left = (800, 800)
 
         self.motion = False
         self.orientation = 0
@@ -57,14 +58,15 @@ class Player(pygame.sprite.Sprite):
     def SacarFondo(self, image):
         image = image.convert()
         color = image.get_at((0, 0))
+        color2 = image.get_at((0, 30))
         image.set_colorkey(color)
+        image.set_colorkey(color2)
         return image
 
     def MovePJ(self, velocidadx, velocidady):
         self.rect.move_ip(velocidadx, velocidady)
 
     def Update(self, screen, velocidadx, velocidady):
-        screen.blit(self.image, self.rect)
         if (velocidadx, velocidady) == (0, 0):
             self.motion = False
             self.currentImage = 0
@@ -104,7 +106,7 @@ class Player(pygame.sprite.Sprite):
 
 def main():
     pygame.display.set_caption("JUEGUITO")
-    displaySize = (1000, 1000)
+    displaySize = (1900, 1000)
     screen = pygame.display.set_mode(displaySize)
 
     clock = pygame.time.Clock()
@@ -162,8 +164,8 @@ def main():
 
         clock.tick(fps)
         screen.fill(white)
-        fondo.update(screen, vx, vy)
-        player.update(screen, vx, vy)
+        fondo.Update(screen, vx, vy)
+        player.Update(screen, vx, vy)
         pygame.display.update()
 
 main()
