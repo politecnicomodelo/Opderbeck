@@ -132,10 +132,10 @@ def main():
     player = Player()
     fondo = Fondo()
 
-    vx, vy = 0, 0
+    (vx, vy) = (0, 0)
     velocidad = 7
     orientacion = 0
-    leftapretada, rightapretada, upapretada, downapretada = False, False, False, False
+    left, right, up, down = False, False, False, False
 
     while salir != True:
         for event in pygame.event.get():
@@ -144,60 +144,46 @@ def main():
 
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_LEFT:
-                vx -= 5
+                left = True
                 vx = -velocidad
-                leftapretada = True
-            if event.key == pygame.K_RIGHT:
-                vx += 5
+                orientacion =
+            elif event.key == pygame.K_RIGHT:
                 vx = velocidad
-                rightapretada = True
-            if event.key == pygame.K_DOWN:
-                vy += 5
-                downapretada = True
+                right = True
+                orientacion =
+            elif event.key == pygame.K_DOWN:
+                down = True
                 vy = velocidad
-            if event.key == pygame.K_UP:
-                vy -= 5
-                upapretada = True
+                orientacion =
+            elif event.key == pygame.K_UP:
+                up = True
                 vy = -velocidad
+                orientacion =
 
         if event.type == pygame.KEYUP:
-
             if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
                 vx = 0
             if event.key == pygame.K_UP or event.key == pygame.K_DOWN:
                  vy = 0
-                oldx = personaje1.rect.left
-                personaje1.rect.move_ip(vx, vy)
-            if personaje1.rect.colliderect(r1):
-                    personaje1.rect.left = oldx
-                    reloj.tick(30)
-                    pantalla.blit(fondo, (0, 0))
-                    pantalla.blit(personaje1.image, personaje1.rect)
-                    pygame.draw.rect(pantalla, (0, 0, 0), r1)
-
             if event.key == pygame.K_LEFT:
-                    leftapretada = False
-
-            if rightapretada: vx = velocidad
-            else: vx = 0
+                left = False
+                if right: vx = velocidad
+                else: vx = 0
 
             if event.key == pygame.K_RIGHT:
-                rightapretada = False
-
-            if leftapretada: vx = -velocidad
-            else: vx = 0
+                right = False
+                if left: vx = -velocidad
+                else: vx = 0
 
             if event.key == pygame.K_UP:
-                upapretada = False
-
-            if downapretada: vy = velocidad
-            else: vy = 0
+                up = False
+                if down: vy = velocidad
+                else: vy = 0
 
             if event.key == pygame.K_DOWN:
-                downapretada = False
-
-            if upapretada: vy = -velocidad
-            else: vy = 0
+                down = False
+                if up: vy = -velocidad
+                else: vy = 0
 
 
         reloj.tick(30)

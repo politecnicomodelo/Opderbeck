@@ -2,7 +2,7 @@ import pygame
 pygame.init()
 
 
-def CargarImagenes():
+"""def CargarImagenes():
     # cargado de imagenes_______________________________________________________________________________________________
     PersonajeFrente = pygame.image.load("PersonajeFrente.png").convert_alpha()
     PersonajeFrenteCaminando1 = pygame.image.load("PersonajeFrenteCaminando1.png").convert_alpha()
@@ -19,12 +19,17 @@ def CargarImagenes():
 
     #fondo = pygame.image.load("").convert_alpha()
 
+    lista = [[PersonajeFrente, PersonajeFrenteCaminando1, PersonajeFrenteCaminando2],
+            [PersonajeEspalda, PersonajeEspaldaCaminando1, PersonajeEspaldaCaminando2],
+            [PersonajeDerecha, PersonajeDerechaCaminando1, PersonajeDerechaCaminando2],
+            [PersonajeIzquierda, PersonajeIzquierdaCaminando1, PersonajeIzquierdaCaminando2]]
+    return lista"""""
 
-class Fondo(object, pygame.sprite.Sprite):
+class Fondo(pygame.sprite.Sprite):
 
 
     def __init__(self):
-        #self.fondo = pygame.image.load("").convert_alpha()
+        self.fondo = pygame.image.load("FondoPueblo.png").convert_alpha()
         self.rect = self.fondo.get_rect()
 
     def update(self, pantalla, velocidadx, velocidady):
@@ -32,13 +37,29 @@ class Fondo(object, pygame.sprite.Sprite):
         pantalla.blit(self.fondo, self.rect)
 
 
-class Jugador(object, pygame.sprite.Sprite):
+class Player(pygame.sprite.Sprite):
 
     def __init__(self):
-        self.lista_imagenes = [[PersonajeFrente, PersonajeFrenteCaminando1, PersonajeFrenteCaminando2],
-                               [PersonajeEspalda, PersonajeEspaldaCaminando1, PersonajeEspaldaCaminando2],
-                               [PersonajeDerecha, PersonajeDerechaCaminando1, PersonajeDerechaCaminando2],
-                               [PersonajeIzquierda, PersonajeIzquierdaCaminando1, PersonajeIzquierdaCaminando2]]
+        # cargado de imagenes_______________________________________________________________________________________________
+        self.PersonajeFrente = pygame.image.load("PersonajeFrente.png").convert_alpha()
+        self.PersonajeFrenteCaminando1 = pygame.image.load("PersonajeFrenteCaminando1.png").convert_alpha()
+        self.PersonajeFrenteCaminando2 = pygame.image.load("PersonajeFrenteCaminando2.png").convert_alpha()
+        self.PersonajeEspalda = pygame.image.load("PersonajeEspalda.png").convert_alpha()
+        self.PersonajeEspaldaCaminando1 = pygame.image.load("PersonajeEspaldaCaminando1.png").convert_alpha()
+        self.PersonajeEspaldaCaminando2 = pygame.image.load("PersonajeEspaldaCaminando2.png").convert_alpha()
+        self.PersonajeDerecha = pygame.image.load("PersonajeDerecha.png").convert_alpha()
+        self.PersonajeDerechaCaminando1 = pygame.image.load("PersonajeDerechaCaminando1.png").convert_alpha()
+        self.PersonajeDerechaCaminando2 = pygame.image.load("PersonajeDerechaCaminando2.png").convert_alpha()
+        self.PersonajeIzquierda = pygame.image.load("PersonajeIzquierda.png").convert_alpha()
+        self.PersonajeIzquierdaCaminando1 = pygame.image.load("PersonajeIzquierdaCaminando1.png").convert_alpha()
+        self.PersonajeIzquierdaCaminando2 = pygame.image.load("PersonajeIzquierdaCaminando2.png").convert_alpha()
+
+        # fondo = pygame.image.load("").convert_alpha()
+
+        self.lista_imagenes = [[self.PersonajeFrente, self.PersonajeFrenteCaminando1, self.PersonajeFrenteCaminando2],
+                 [self.PersonajeEspalda, self.PersonajeEspaldaCaminando1, self.PersonajeEspaldaCaminando2],
+                 [self.PersonajeDerecha, self.PersonajeDerechaCaminando1, self.PersonajeDerechaCaminando2],
+                 [self.PersonajeIzquierda, self.PersonajeIzquierdaCaminando1, self.PersonajeIzquierdaCaminando2]]
         self.imagen_actual = 0
         self.imagen = self.lista_imagenes[0][self.imagen_actual]
 
@@ -48,11 +69,10 @@ class Jugador(object, pygame.sprite.Sprite):
         self.movimiento = False
         self.orientacion = 0
 
-
-    def MoverPersonaje(self, velocidadx, velocidady):
+    def MovePJ(self, velocidadx, velocidady):
         self.rect.move_ip(velocidadx, velocidady)
 
-    def Update (self, velocidadx, velocidady, pantalla):
+    def Update (self, screen, velocidadx, velocidady):
         if (velocidadx, velocidady) == (0, 0):
             self.movimiento = False
             self.imagen_actual = 0
@@ -89,10 +109,9 @@ class Jugador(object, pygame.sprite.Sprite):
                 if self.imagen_actual > 1: self.imagen_actual = 0
 
         (velocidadx, velocidady) = (0, 0)
-
-        self.MoverPersonaje(velocidadx, velocidady)
+        self.MovePJ(velocidadx, velocidady)
         self.imagen = self.lista_imagenes[self.orientacion][self.imagen_actual]
-        pantalla.blit(self.imagen, self.rect)
+        screen.blit(self.imagen, self.rect)
 
 
 def main():
@@ -117,20 +136,54 @@ def main():
     finish = False
 
     fondo = Fondo()
-    player = Jugador()
+    player = Player()
+    velocidad = 10
+    vx, vy = 0, 0
 
-    (velocidadx, velocidady) = (0, 0)
-    orientacion = 0
+    left, right, up, down = False, False, False, False
+
 
     while finish != True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 finish = True
 
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_LEFT:
+                left = True
+                vx = -velocidad
+            if event.key == pygame.K_RIGHT:
+                vx = velocidad
+                right = True
+            if event.key == pygame.K_DOWN:
+                down = True
+                vy = velocidad
+            if event.key == pygame.K_UP:
+                up = True
+                vy = -velocidad
+
+        if event.type == pygame.KEYUP:
+            if event.key == pygame.K_LEFT:
+                left = False
+                if right: vx = velocidad
+                else: vx = 0
+            if event.key == pygame.K_RIGHT:
+                right = False
+                if left: vx = -velocidad
+                else: vx = 0
+            if event.key == pygame.K_UP:
+                up = False
+                if down: vy = velocidad
+                else: vy = 0
+            if event.key == pygame.K_DOWN:
+                down = False
+                if up: vy = -velocidad
+                else: vy = 0
 
 
-        fondo.update(screen, velocidadx, velocidady)
-        player.update(screen, velocidadx, velocidady, orientacion)
+        clock.tick(fps)
+        fondo.update(screen, vx, vy)
+        player.update(screen, vx, vy)
         pygame.display.update()
 
 
@@ -140,6 +193,7 @@ def main():
 
 
 
-CargarImagenes()
+
+
 main()
 pygame.quit()
