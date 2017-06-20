@@ -12,12 +12,30 @@ def removeBackground(image):
 class Menu():
     pass
 
+
+
 class Background (object):
+    def CreateBorders(self, width, height):
+        self.right = pygame.Rect(width/width, height/height, width/100, height) # x y width height
+        self.top = pygame.Rect(width/width, height/height, width, height/60)
+        self.down = pygame.Rect(width/width, height-10, width, height/60)
+        self.left = pygame.Rect(width-10, height/height, width/100, height)
+        listborders = [self.top, self.down, self.right, self.left]
+        return listborders
+
+    def PaintBorders (self, screen, color, listborder):
+        pygame.draw.rect(screen, color, listborder[0])
+        pygame.draw.rect(screen, color, listborder[1])
+        pygame.draw.rect(screen, color, listborder[2])
+        pygame.draw.rect(screen, color, listborder[3])
+
     def newMap(self, lvl):
         if lvl == 1:
-            self.rect1 = pygame.Rect(150,150,50,500)
+            self.rect1 = pygame.Rect(150, 150, 50, 500)
             self.rect2 = pygame.Rect(200, 0, 600, 50)
-            self.listrec = [self.rect1, self.rect2]
+            self.rect3 = pygame.Rect(1400, 50, 50, 950)
+            self.rect4 = pygame.Rect(500, 300, 500, 50)
+            self.listrec = [self.rect1, self.rect2, self.rect3, self.rect4]
         elif lvl == 2:
             pass
         return self.listrec
@@ -33,15 +51,26 @@ class Player (object):
         return self.player
 
     def movePlayer(self, player, x, y):
-       player.move_ip(x, y)
+        player.move_ip(x, y)
 
     def update(self, screen, color, player):
         pygame.draw.rect(screen, color, player)
 
+    def detectCollision(self, screen, player, map):
+        for item in map:
+            if player.colliderect(item):
+                pygame.draw.rect(screen, (255, 0, 0), player)
+                return True
+
+    def detectLimit(self, player, listborders):
+        for item in listborders:
+            if player.colliderect(item):
+                return True
+
 def main ():
 
     pygame.display.set_caption("LABERINTO")
-    width, height = 1500, 950
+    (width, height) = (1500, 950)
     screen = pygame.display.set_mode((width, height))
 
     clock = pygame.time.Clock()
@@ -55,7 +84,7 @@ def main ():
     grey = (155,155,155)
 
     velocidad = 10
-    vx, vy = (0,0)
+    vx, vy = (0, 0)
 
     up, down, left, right = False, False, False, False
 
@@ -65,14 +94,17 @@ def main ():
     player = Player()
     player1 = player.createPlayer()
     background = Background()
-
+    listborders = background.CreateBorders(width, height)
     level = 1
+    map = background.newMap(level)
+    lost = False
     while finish != True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 finish = True
             if event.type == pygame.MOUSEBUTTONDOWN:
                 pass
+
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_UP:
                     vy =-velocidad
@@ -104,14 +136,28 @@ def main ():
                     if up: vy = -velocidad
                     else: vy = 0
 
+
         if finishlvl:
             map = background.newMap(level)
 
+        (oldx, oldy) = (player1.x, player1.y)
 
         clock.tick(fps)
         screen.fill(white)
+        background.PaintBorders(screen, grey, listborders)
         background.paintMap(screen, grey, map)
-        player.movePlayer(player1, vx, vy)
+
+        collision = player.detectCollision(screen, player1, map)
+        if collision:
+            (player1.x, player1.y) = (25, 25)
+            collision = False
+        else: player.movePlayer(player1, vx, vy)
+
+        limit = player.detectLimit(player1, listborders)
+        if limit:
+            (player1.x, player1.y) = (oldx, oldy)
+            limit = False
+
         player.update(screen, black, player1)
         pygame.display.update()
 
