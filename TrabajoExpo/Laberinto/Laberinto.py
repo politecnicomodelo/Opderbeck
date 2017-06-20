@@ -59,7 +59,7 @@ class Player (object):
     def detectCollision(self, screen, player, map):
         for item in map:
             if player.colliderect(item):
-                pygame.draw.rect(screen, (255, 0, 0), player)
+                pygame.draw.rect(screen, (255,0,0), player)
                 return True
 
     def detectLimit(self, player, listborders):
