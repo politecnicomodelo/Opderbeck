@@ -1,7 +1,7 @@
 import pygame
 
 pygame.init()
-
+pygame.display.set_caption("PONG")
 screen = (500,500)
 pantalla = pygame.display.set_mode(screen)
 

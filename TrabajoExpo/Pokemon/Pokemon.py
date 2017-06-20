@@ -58,9 +58,7 @@ class Player(pygame.sprite.Sprite):
     def SacarFondo(self, image):
         image = image.convert()
         color = image.get_at((0, 0))
-        color2 = image.get_at((0, 30))
         image.set_colorkey(color)
-        image.set_colorkey(color2)
         return image
 
     def MovePJ(self, velocidadx, velocidady):
@@ -105,7 +103,7 @@ class Player(pygame.sprite.Sprite):
 
 
 def main():
-    pygame.display.set_caption("JUEGUITO")
+    pygame.display.set_caption("POKEMON")
     displaySize = (1900, 1000)
     screen = pygame.display.set_mode(displaySize)
 
