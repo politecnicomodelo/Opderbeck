@@ -61,9 +61,6 @@ class Player(pygame.sprite.Sprite):
         image.set_colorkey(color)
         return image
 
-    def MovePJ(self, velocidadx, velocidady):
-        self.rect.move_ip(velocidadx, velocidady)
-
     def Update(self, screen, velocidadx, velocidady):
         if (velocidadx, velocidady) == (0, 0):
             self.motion = False
@@ -96,8 +93,6 @@ class Player(pygame.sprite.Sprite):
                 elif self.currentImage == 2: self.currentImage = 1
                 if self.currentImage > 2: self.currentImage = 0
 
-        (velocidadx, velocidady) = (0, 0)
-        self.MovePJ(velocidadx, velocidady)
         self.image = self.listImages[self.orientation][self.currentImage]
         screen.blit(self.image, self.rect)
 
