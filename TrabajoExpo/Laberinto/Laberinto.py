@@ -35,7 +35,11 @@ class Background (object):
             self.rect2 = pygame.Rect(200, 0, 600, 50)
             self.rect3 = pygame.Rect(1400, 50, 50, 950)
             self.rect4 = pygame.Rect(500, 300, 500, 50)
-            self.listrec = [self.rect1, self.rect2, self.rect3, self.rect4]
+            self.rect5 = pygame.Rect(600, 600, 50, 100)
+            self.rect6 = pygame.Rect(600, 100, 500, 300)
+            self.rect7 = pygame.Rect(100, 100, 150, 300)
+            self.rect8 = pygame.Rect(300, 100, 100, 500)
+            self.listrec = [self.rect1, self.rect2, self.rect3, self.rect4, self.rect5, self.rect6, self.rect7, self.rect8]
         elif lvl == 2:
             pass
         return self.listrec
@@ -47,7 +51,7 @@ class Background (object):
 class Player (object):
 
     def createPlayer(self):
-        self.player = pygame.Rect(100, 100, 25, 25)
+        self.player = pygame.Rect(25, 25, 25, 25)
         return self.player
 
     def movePlayer(self, player, x, y):
@@ -70,11 +74,11 @@ class Player (object):
 def main ():
 
     pygame.display.set_caption("LABERINTO")
-    (width, height) = (1500, 950)
+    (width, height) = (1000, 900)
     screen = pygame.display.set_mode((width, height))
 
     clock = pygame.time.Clock()
-    fps = 20
+    fps = 30
 
     white = (255, 255, 255)
     black = (0, 0, 0)
