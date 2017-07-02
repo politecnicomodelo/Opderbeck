@@ -55,10 +55,9 @@ class Snake(object):
         self.lastchage.append(x, y)
         return self.lastchange
 
-
 def main ():
 
-    pygame.display.set_caption("JUEGUITO")
+    pygame.display.set_caption("SNAKE")
     width, height = 1500, 950
     screen = pygame.display.set_mode((width, height))
 
