@@ -10,7 +10,7 @@ def removeBackground(image):
 
 
 class Menu():
-    pass
+
 
 
 
