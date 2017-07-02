@@ -9,9 +9,22 @@ def removeBackground(image):
     return image
 
 
-class Menu():
+class Menu(object):
+    def InitializeMenu(self, width, height):
+        self.start = pygame.Rect(width/2, height/2, width/2, height/10)
+        self.save = pygame.Rect(width/2.2, height/2.2, width/2, height/10)
+        self.button = [self.start, self.save]
+        return self.button
 
+    def ShowMenu(self, screen, color, button):
+        pygame.draw.rect(screen, color, button[0])
+        pygame.draw.rect(screen, color, button[1])
 
+    def StartGame(self):
+        pass
+
+    def SaveGame(self):
+        pass
 
 
 class Background (object):
@@ -29,17 +42,17 @@ class Background (object):
         pygame.draw.rect(screen, color, listborder[2])
         pygame.draw.rect(screen, color, listborder[3])
 
-    def newMap(self, lvl):
+    def newMap(self, lvl, width, height):
         if lvl == 1:
-            self.rect1 = pygame.Rect(150, 150, 50, 500)
-            self.rect2 = pygame.Rect(200, 0, 600, 50)
-            self.rect3 = pygame.Rect(1400, 50, 50, 950)
-            self.rect4 = pygame.Rect(500, 300, 500, 50)
-            self.rect5 = pygame.Rect(600, 600, 50, 100)
-            self.rect6 = pygame.Rect(600, 100, 500, 300)
-            self.rect7 = pygame.Rect(100, 100, 150, 300)
-            self.rect8 = pygame.Rect(300, 100, 100, 500)
-            self.listrec = [self.rect1, self.rect2, self.rect3, self.rect4, self.rect5, self.rect6, self.rect7, self.rect8]
+            self.rect1 = pygame.Rect(width/4, height/4, width/2, height/2)
+            self.rect2 = pygame.Rect(width/4, height/12, width/14, height/6)
+            self.rect3 = pygame.Rect(width/6, height/10, width/15, height/6)
+            """self.rect4 = pygame.Rect()
+            self.rect5 = pygame.Rect()
+            self.rect6 = pygame.Rect()
+            self.rect7 = pygame.Rect()
+            self.rect8 = pygame.Rect()"""
+            self.listrec = [self.rect1, self.rect2, self.rect3]
         elif lvl == 2:
             pass
         return self.listrec
@@ -47,6 +60,7 @@ class Background (object):
     def paintMap(self, screen, color, map):
         for item in map:
             pygame.draw.rect (screen, color, item)
+
 
 class Player (object):
 
@@ -63,7 +77,7 @@ class Player (object):
     def detectCollision(self, screen, player, map):
         for item in map:
             if player.colliderect(item):
-                pygame.draw.rect(screen, (255,0,0), player)
+                pygame.draw.rect(screen, (255, 0, 0), player)
                 return True
 
     def detectLimit(self, player, listborders):
@@ -71,9 +85,10 @@ class Player (object):
             if player.colliderect(item):
                 return True
 
+
 def main ():
 
-    pygame.display.set_caption("LABERINTO")
+    pygame.display.set_caption("MAZE")
     (width, height) = (1000, 900)
     screen = pygame.display.set_mode((width, height))
 
@@ -85,10 +100,11 @@ def main ():
     red = (255, 0, 0)
     green = (0, 255, 0)
     blue = (0, 0, 255)
-    grey = (155,155,155)
+    grey = (155, 155, 155)
 
     velocidad = 10
     vx, vy = (0, 0)
+    restartX, restartY = (25, 25)
 
     up, down, left, right = False, False, False, False
 
@@ -100,8 +116,8 @@ def main ():
     background = Background()
     listborders = background.CreateBorders(width, height)
     level = 1
-    map = background.newMap(level)
-    lost = False
+    map = background.newMap(level, width, height)
+
     while finish != True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -111,7 +127,7 @@ def main ():
 
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_UP:
-                    vy =-velocidad
+                    vy = -velocidad
                     up = True
                 if event.key == pygame.K_DOWN:
                     vy = velocidad
@@ -142,7 +158,7 @@ def main ():
 
 
         if finishlvl:
-            map = background.newMap(level)
+            map = background.newMap(level, width, height)
 
         (oldx, oldy) = (player1.x, player1.y)
 
@@ -153,7 +169,7 @@ def main ():
 
         collision = player.detectCollision(screen, player1, map)
         if collision:
-            (player1.x, player1.y) = (25, 25)
+            (player1.x, player1.y) = (restartX, restartY)
             collision = False
         else: player.movePlayer(player1, vx, vy)
 
