@@ -46,15 +46,25 @@ class Background (object):
         if lvl == 1:
             self.rect1 = pygame.Rect(width/4, height/4, width/2, height/2)
             self.rect2 = pygame.Rect(width/4, height/12, width/14, height/6)
-            self.rect3 = pygame.Rect(width/6, height/10, width/15, height/6)
-            """self.rect4 = pygame.Rect()
-            self.rect5 = pygame.Rect()
-            self.rect6 = pygame.Rect()
-            self.rect7 = pygame.Rect()
-            self.rect8 = pygame.Rect()"""
-            self.listrec = [self.rect1, self.rect2, self.rect3]
+            self.rect3 = pygame.Rect(width/15, height/1.5, width/4, height/12)
+            self.rect4 = pygame.Rect(width/100, height/1.9, width/5, height/12)
+            self.rect5 = pygame.Rect(width/15, height/2.5, width/5, height/12)
+            self.rect6 = pygame.Rect(width/100, height/3.5, width/5, height/12)
+            self.rect7 = pygame.Rect(width/15, height/6.0, width/5, height/12)
+            self.rect8 = pygame.Rect(width/2.7, height/70, width/12, height/5)
+            self.rectfinal = pygame.Rect(width-50, height-50, 25, 25)
+            self.listrec = [self.rect1, self.rect2, self.rect3, self.rect4, self.rect5, self.rect6, self.rect7, self.rect8, self.rectfinal]
         elif lvl == 2:
-            pass
+            self.rect1 = pygame.Rect(width/10, height/10  , width/10  , height/10  )
+            self.rect2 = pygame.Rect(width  , height  , width  , height  )
+            self.rect3 = pygame.Rect(width  , height  , width  , height  )
+            self.rect4 = pygame.Rect(width , height  , width  , height  )
+            self.rect5 = pygame.Rect(width  , height  , width  , height  )
+            self.rect6 = pygame.Rect(width  , height  , width  , height  )
+            self.rect7 = pygame.Rect(width  , height  , width  , height  )
+            self.rectfinal = pygame.Rect(width - 50, height - 50, 25, 25)
+            self.listrec = [self.rect1, self.rect2, self.rect3, self.rect4, self.rect5, self.rect6, self.rect7,
+                            self.rectfinal]
         return self.listrec
 
     def paintMap(self, screen, color, map):
@@ -75,10 +85,16 @@ class Player (object):
         pygame.draw.rect(screen, color, player)
 
     def detectCollision(self, screen, player, map):
+        self.colision = 1
         for item in map:
             if player.colliderect(item):
-                pygame.draw.rect(screen, (255, 0, 0), player)
-                return True
+                if item == map[-1]:
+                    pygame.draw.rect(screen, (0, 255, 0), player)
+                    self.colision = 2
+                else:
+                    pygame.draw.rect(screen, (255, 0, 0), player)
+                    self.colision = True
+                return self.colision
 
     def detectLimit(self, player, listborders):
         for item in listborders:
@@ -106,58 +122,66 @@ def main ():
     vx, vy = (0, 0)
     restartX, restartY = (25, 25)
 
+
     up, down, left, right = False, False, False, False
 
     finish = False
-    finishlvl = True
+    nextlevel = True
 
     player = Player()
     player1 = player.createPlayer()
     background = Background()
     listborders = background.CreateBorders(width, height)
     level = 1
-    map = background.newMap(level, width, height)
+    mode = 0
+
+    if mode == 1:
+        pygame.mouse.set_pos(restartX, restartY)
 
     while finish != True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 finish = True
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                pass
+            if mode == 1:
+                (player1.x, player1.y) = pygame.mouse.get_pos()
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    pass
+            else:
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_ESCAPE:
+                        finish = True
+                    if event.key == pygame.K_UP:
+                        vy = -velocidad
+                        up = True
+                    if event.key == pygame.K_DOWN:
+                        vy = velocidad
+                        down = True
+                    if event.key == pygame.K_RIGHT:
+                        vx = velocidad
+                        right = True
+                    if event.key == pygame.K_LEFT:
+                        vx = -velocidad
+                        left = True
+                if event.type == pygame.KEYUP:
+                    if event.key == pygame.K_LEFT:
+                        left = False
+                        if right: vx = velocidad
+                        else: vx = 0
+                    if event.key == pygame.K_RIGHT:
+                        right = False
+                        if left: vx = -velocidad
+                        else: vx = 0
+                    if event.key == pygame.K_UP:
+                        up = False
+                        if down: vy = velocidad
+                        else: vy = 0
+                    if event.key == pygame.K_DOWN:
+                        down = False
+                        if up: vy = -velocidad
+                        else: vy = 0
 
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_UP:
-                    vy = -velocidad
-                    up = True
-                if event.key == pygame.K_DOWN:
-                    vy = velocidad
-                    down = True
-                if event.key == pygame.K_RIGHT:
-                    vx = velocidad
-                    right = True
-                if event.key == pygame.K_LEFT:
-                    vx = -velocidad
-                    left = True
-            if event.type == pygame.KEYUP:
-                if event.key == pygame.K_LEFT:
-                    left = False
-                    if right: vx = velocidad
-                    else: vx = 0
-                if event.key == pygame.K_RIGHT:
-                    right = False
-                    if left: vx = -velocidad
-                    else: vx = 0
-                if event.key == pygame.K_UP:
-                    up = False
-                    if down: vy = velocidad
-                    else: vy = 0
-                if event.key == pygame.K_DOWN:
-                    down = False
-                    if up: vy = -velocidad
-                    else: vy = 0
 
-
-        if finishlvl:
+        if nextlevel:
             map = background.newMap(level, width, height)
 
         (oldx, oldy) = (player1.x, player1.y)
@@ -166,17 +190,40 @@ def main ():
         screen.fill(white)
         background.PaintBorders(screen, grey, listborders)
         background.paintMap(screen, grey, map)
+        if mode == 1:
+            collision = player.detectCollision(screen, player1, map)
+            if collision == 2:
+                (player1.x, player1.y) = (restartX, restartY)
+                pygame.mouse.set_pos((restartX, restartY))
+                level += 1
+                nextlevel = True
+            elif collision:
+                (player1.x, player1.y) = (restartX, restartY)
+                pygame.mouse.set_pos((restartX, restartY))
+                nextlevel = False
+            else:
+                player.movePlayer(player1, vx, vy)
+                nextlevel = False
+        else:
+            collision = player.detectCollision(screen, player1, map)
+            if collision == 2:
+                (player1.x, player1.y) = (restartX, restartY)
+                level += 1
+                nextlevel = True
+            elif collision:
+                (player1.x, player1.y) = (restartX, restartY)
+                nextlevel = False
+            else:
+                player.movePlayer(player1, vx, vy)
+                nextlevel = False
 
-        collision = player.detectCollision(screen, player1, map)
-        if collision:
-            (player1.x, player1.y) = (restartX, restartY)
-            collision = False
-        else: player.movePlayer(player1, vx, vy)
+            limit = player.detectLimit(player1, listborders)
+            if limit:
+                if mode == 1:
+                    pygame.mouse.set_pos((oldx, oldy))
+                    (player1.x, player1.y) = (oldx, oldy)
+                else:(player1.x, player1.y) = (oldx, oldy)
 
-        limit = player.detectLimit(player1, listborders)
-        if limit:
-            (player1.x, player1.y) = (oldx, oldy)
-            limit = False
 
         player.update(screen, black, player1)
         pygame.display.update()
