@@ -55,6 +55,7 @@ class Background (object):
             self.rect9 = pygame.Rect(width/2, height/7, width/12, height/7)
             self.rect10 = pygame.Rect(width/1.6, height/70, width/12, height/5)
             self.rect11 = pygame.Rect(width/2, height/70, width/12, height/10)
+            self.rect12 = pygame.Rect(width/2.7, height/70, width/12, height/5)
             self.rectfinal = pygame.Rect(width-50, height-50, 25, 25)
             self.listrec = [self.rect1, self.rect2, self.rect3, self.rect4, self.rect5, self.rect6, self.rect7, self.rect8, self.rect9, self.rect10, self.rect11, self.rectfinal]
         elif lvl == 2:
