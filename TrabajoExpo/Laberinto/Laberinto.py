@@ -58,22 +58,21 @@ class Background (object):
             self.rectfinal = pygame.Rect(width-50, height-50, 25, 25)
             self.listrec = [self.rect1, self.rect2, self.rect3, self.rect4, self.rect5, self.rect6, self.rect7, self.rect8, self.rect9, self.rect10, self.rect11, self.rectfinal]
         elif lvl == 2:
-            self.rect1 = pygame.Rect(width/10, height/10  , width/10  , height/10  )
-            self.rect2 = pygame.Rect(width  , height  , width  , height  )
-            self.rect3 = pygame.Rect(width  , height  , width  , height  )
-            self.rect4 = pygame.Rect(width , height  , width  , height  )
-            self.rect5 = pygame.Rect(width  , height  , width  , height  )
-            self.rect6 = pygame.Rect(width  , height  , width  , height  )
-            self.rect7 = pygame.Rect(width  , height  , width  , height  )
+            self.rect1 = pygame.Rect(width/25.5, height/10, width/1.2, height/10)
+            self.rect2 = pygame.Rect(width/10, height/3.8, width/1.1, height/15)
+            self.rect3 = pygame.Rect(width/25, height/2.3, width/1.2, height/10)
+            self.rect4 = pygame.Rect(width/10, height/1.6, width/1.1, height/15)
+            self.rect5 = pygame.Rect(width/2, height/1.6, width/9, height/4)
             self.rectfinal = pygame.Rect(width - 50, height - 50, 25, 25)
-            self.listrec = [self.rect1, self.rect2, self.rect3, self.rect4, self.rect5, self.rect6, self.rect7,
-                            self.rectfinal]
+            self.listrec = [self.rect1, self.rect2, self.rect3, self.rect4, self.rect5, self.rectfinal]
+
         return self.listrec
 
-    def paintMap(self, screen, color, map):
+    def paintMap(self, screen, color, color1, map):
         for item in map:
             pygame.draw.rect (screen, color, item)
-
+            if item == map[-1]:
+                pygame.draw.rect(screen, color1, item)
 
 class Player (object):
 
@@ -135,8 +134,8 @@ def main ():
     player1 = player.createPlayer()
     background = Background()
     listborders = background.CreateBorders(width, height)
-    level = 1
-    mode = 1
+    level = 2
+    mode = 0
 
     if mode == 1:
         pygame.mouse.set_pos(restartX, restartY)
@@ -192,7 +191,7 @@ def main ():
         clock.tick(fps)
         screen.fill(white)
         background.PaintBorders(screen, grey, listborders)
-        background.paintMap(screen, grey, map)
+        background.paintMap(screen, grey, blue, map)
         if mode == 1:
             collision = player.detectCollision(screen, player1, map)
             if collision == 2:
@@ -223,8 +222,8 @@ def main ():
             limit = player.detectLimit(player1, listborders)
             if limit:
                 if mode == 1:
-                    pygame.mouse.set_pos((oldx, oldy))
                     (player1.x, player1.y) = (oldx, oldy)
+                    pygame.mouse.set_pos((oldx, oldy))
                 else:(player1.x, player1.y) = (oldx, oldy)
 
 
