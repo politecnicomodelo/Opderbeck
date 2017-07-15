@@ -52,11 +52,9 @@ class Background (object):
             self.rect6 = pygame.Rect(width/100, height/3.5, width/5, height/12)
             self.rect7 = pygame.Rect(width/15, height/6.0, width/5, height/12)
             self.rect8 = pygame.Rect(width/2.7, height/70, width/12, height/5)
-            self.rect9 = pygame.Rect(width/2, height/7, width/12, height/7)
+            self.rect9 = pygame.Rect(width/2, height/6.7, width/12, height/7)
             self.rect10 = pygame.Rect(width/1.6, height/70, width/12, height/5)
             self.rect11 = pygame.Rect(width/2, height/70, width/12, height/10)
-            self.rect12 = pygame.Rect(width/2.7, height/70, width/12, height/5)
-            self.rect13 = pygame.Rect(width/2.7, height/70, width/12, height/5)
             self.rectfinal = pygame.Rect(width-50, height-50, 25, 25)
             self.listrec = [self.rect1, self.rect2, self.rect3, self.rect4, self.rect5, self.rect6, self.rect7, self.rect8, self.rect9, self.rect10, self.rect11, self.rectfinal]
         elif lvl == 2:
@@ -138,7 +136,7 @@ def main ():
     background = Background()
     listborders = background.CreateBorders(width, height)
     level = 1
-    mode = 0
+    mode = 1
 
     if mode == 1:
         pygame.mouse.set_pos(restartX, restartY)
