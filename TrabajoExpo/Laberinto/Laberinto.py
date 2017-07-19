@@ -43,7 +43,7 @@ class Background (object):
         pygame.draw.rect(screen, color, listborder[3])
 
     def newMap(self, lvl, width, height):
-        if lvl == 1:
+        if lvl == 3:
             self.rect1 = pygame.Rect(width/4, height/4, width/2, height/2)
             self.rect2 = pygame.Rect(width/4, height/12, width/14, height/6)
             self.rect3 = pygame.Rect(width/15, height/1.5, width/4, height/12)
@@ -62,9 +62,22 @@ class Background (object):
             self.rect2 = pygame.Rect(width/10, height/3.8, width/1.1, height/15)
             self.rect3 = pygame.Rect(width/25, height/2.3, width/1.2, height/10)
             self.rect4 = pygame.Rect(width/10, height/1.6, width/1.1, height/15)
-            self.rect5 = pygame.Rect(width/2, height/1.6, width/9, height/4)
+            self.rect5 = pygame.Rect(width/2, height/1.6, width/9, height/3)
             self.rectfinal = pygame.Rect(width - 50, height - 50, 25, 25)
             self.listrec = [self.rect1, self.rect2, self.rect3, self.rect4, self.rect5, self.rectfinal]
+        elif lvl == 1:
+            self.rect1 = pygame.Rect(width/2, height/18, width/8, height/1.05)
+            self.rect2 = pygame.Rect(width/3.2, height/20, width/8, height/1.15)
+            self.rect3 = pygame.Rect(width/10, height/4, width/38, height/1.50)
+            self.rect4 = pygame.Rect(width/35, height/4, width/38, height/1.50)
+            self.rect5 = pygame.Rect(width/6, height/4, width/38, height/1.50)
+            self.rect6 = pygame.Rect(width/4.5, height/4, width/38, height/1.50)
+            self.rect7 = pygame.Rect(width/3.4, height/4, width/1000, height/1000)
+            self.rect8 = pygame.Rect(width/3.8, height/4, width/1000, height/1000)
+            self.rect9 = pygame.Rect(width/12, height/4, width/1000, height/1000)
+            self.rect10 = pygame.Rect(width/1.45, height/5, width/4, height/20)
+            self.rectfinal = pygame.Rect(width - 50, height - 50, 25, 25)
+            self.listrec = [self.rect1, self.rect2, self.rect3, self.rect4, self.rect5, self.rect6, self.rect7, self.rect8, self.rect9, self.rect10, self.rectfinal]
 
         return self.listrec
 
@@ -134,7 +147,7 @@ def main ():
     player1 = player.createPlayer()
     background = Background()
     listborders = background.CreateBorders(width, height)
-    level = 2
+    level = 1
     mode = 0
 
     if mode == 1:
