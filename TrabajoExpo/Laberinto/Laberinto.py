@@ -62,11 +62,11 @@ class Background (object):
             self.rect2 = pygame.Rect(width/10, height/3.8, width/1.1, height/15)
             self.rect3 = pygame.Rect(width/25, height/2.3, width/1.2, height/10)
             self.rect4 = pygame.Rect(width/10, height/1.6, width/1.1, height/15)
-            self.rect5 = pygame.Rect(width/2, height/1.6, width/9, height/3)
+            self.rect5 = pygame.Rect(width/2, height/1.6, width/9, height/3.2)
             self.rectfinal = pygame.Rect(width - 50, height - 50, 25, 25)
             self.listrec = [self.rect1, self.rect2, self.rect3, self.rect4, self.rect5, self.rectfinal]
         elif lvl == 1:
-            self.rect1 = pygame.Rect(width/2, height/18, width/8, height/1.05)
+            self.rect1 = pygame.Rect(width/2, height/16, width/8, height/1.05)
             self.rect2 = pygame.Rect(width/3.2, height/20, width/8, height/1.15)
             self.rect3 = pygame.Rect(width/10, height/4, width/38, height/1.50)
             self.rect4 = pygame.Rect(width/35, height/4, width/38, height/1.50)
@@ -120,7 +120,7 @@ class Player (object):
 def main ():
 
     pygame.display.set_caption("MAZE")
-    (width, height) = (1000, 900)
+    (width, height) = (1000, 700)
     screen = pygame.display.set_mode((width, height))
 
     clock = pygame.time.Clock()
@@ -147,8 +147,9 @@ def main ():
     player1 = player.createPlayer()
     background = Background()
     listborders = background.CreateBorders(width, height)
-    level = 1
-    mode = 0
+    level = 2
+    mode = 1
+
 
     if mode == 1:
         pygame.mouse.set_pos(restartX, restartY)
