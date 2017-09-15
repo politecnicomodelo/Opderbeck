@@ -1,9 +1,9 @@
+import pygame
+from pygame.locals import *
+pygame.init()
 
-matriz = [
-        [4, 9, 2],
-        [3, 5, 7],
-        [8, 1, 6]
-        ]
+
+
 def comprobador(matriz):
     total = 0
     for f in xrange(3):
@@ -33,4 +33,40 @@ def comprobador(matriz):
         print ("esta mal una diagonal")
 
 
-comprobador(matriz)
+def main():
+    WIDTH = 640
+    HEIGHT = 480
+    FPS = 60
+
+    ORANGE = (252, 190, 34)
+    BACKGROUND = (250, 243, 210)
+
+    screen = pygame.display.set_mode((WIDTH, HEIGHT))
+    pygame.display.set_caption("Cuadrado Magico")
+
+    clock = pygame.time.Clock()
+    finish = True
+
+    fuente = pygame.font.SysFont("Arial", 25, True, False)
+
+    r1 = pygame.Rect(WIDTH/2, HEIGHT/2, 10, 10)
+
+    matriz = [
+            [4, 9, 2],
+            [3, 5, 7],
+            [8, 1, 6]
+            ]
+
+    while finish:
+        for eventos in pygame.event.get():
+            if eventos.type == pygame.QUIT:
+                finish = False
+
+        clock.tick(FPS)
+        screen.fill(BACKGROUND)
+
+        pygame.display.update()
+
+
+main()
+
