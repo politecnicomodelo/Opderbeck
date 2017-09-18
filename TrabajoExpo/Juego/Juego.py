@@ -3,7 +3,7 @@ pygame.init()
 
 
 
-def confirmGame(matriz, font):
+def confirmGame(matriz, font, COLOR):
     total = 0
     for f in xrange(3):
         for c in xrange(3):
@@ -32,12 +32,12 @@ def confirmGame(matriz, font):
                         cantidad += 1
 
 
-    col = font.render("Esta mal una COLUMNA", 0, (0,0,0))
-    fil = font.render("Esta mal una FILA", 0, (0, 0, 0))
-    diag = font.render("Esta mal una DIAGONAL", 0, (0, 0, 0))
+    col = font.render("Esta mal una COLUMNA", 0, COLOR)
+    fil = font.render("Esta mal una FILA", 0, COLOR)
+    diag = font.render("Esta mal una DIAGONAL", 0, COLOR)
 
-    mal = font.render("ALGO ESTA MAL, PRUEBA DENUEVO", 0, (0, 0, 0))
-    bien = font.render("GANASTE!  FELICITACIONES!", 0, (0, 0, 0))
+    mal = font.render("ALGO ESTA MAL, PRUEBA DENUEVO", 0, COLOR)
+    bien = font.render("GANASTE!  FELICITACIONES!", 0, COLOR)
 
     #if columna != total or columna1 != total or columna2 != total:
       #  return col
@@ -53,6 +53,60 @@ def confirmGame(matriz, font):
     else:
         return bien
 
+
+def Help(screen, COLOR, matriz, font):
+    f1 = matriz[0][0] + matriz[0][1] + matriz[0][2]
+    f2 = matriz[1][0] + matriz[1][1] + matriz[1][2]
+    f3 = matriz[2][0] + matriz[2][1] + matriz[2][2]
+
+
+    c1 = matriz[0][0] + matriz[1][0] + matriz[2][0]
+    c2 = matriz[0][1] + matriz[1][1] + matriz[2][1]
+    c3 = matriz[0][2] + matriz[1][2] + matriz[2][2]
+
+
+    d1 = matriz[0][0] + matriz[1][1] + matriz[2][2]
+    d2 = matriz[0][2] + matriz[1][1] + matriz[2][0]
+
+    fila1 = font.render(str(f1), 0, COLOR)
+    fila2 = font.render(str(f2), 0, COLOR)
+    fila3 = font.render(str(f3), 0, COLOR)
+
+    columna1 = font.render(str(c1), 0, COLOR)
+    columna2 = font.render(str(c2), 0, COLOR)
+    columna3 = font.render(str(c3), 0, COLOR)
+
+    diag1 = font.render(str(d1), 0, COLOR)
+    diag2 = font.render(str(d2), 0, COLOR)
+
+    screen.blit(fila1, (200, 160))
+    screen.blit(fila2, (200, 290))
+    screen.blit(fila3, (200, 420))
+    screen.blit(columna1, (300, 60))
+    screen.blit(columna2, (440, 60))
+    screen.blit(columna3, (570, 60))
+    screen.blit(diag1, (200, 60))
+    screen.blit(diag2, (200, 510))
+    #pygame.draw.line(screen, COLOR, (220, 175), (590, 175))
+
+
+def menu(font, COLOR, screen, BACKGROUND):
+    level1 = font.render("NIVEL 1", 0, COLOR)
+    level2 = font.render("NIVEL 2", 0, COLOR)
+
+    level3 = pygame.Rect(380, 235, 140, 30)
+    level4 = pygame.Rect(380, 285, 140, 30)
+
+    screen.fill(BACKGROUND)
+
+    pygame.draw.rect(screen, BACKGROUND, level3)
+    pygame.draw.rect(screen, BACKGROUND, level4)
+
+    screen.blit(level1, (380, 235))
+    screen.blit(level2, (380, 285))
+
+    return level3, level4
+
 def main():
     WIDTH = 1000
     HEIGHT = 600
@@ -62,12 +116,15 @@ def main():
     BLACK = (0, 0, 0)
     BACKGROUND = (250, 246, 222)
 
+    LIMITLEVE1 = 9
+    LIMITLEVE2 = 15
+
     screen = pygame.display.set_mode((WIDTH, HEIGHT))
     pygame.display.set_caption("Cuadrado Magico")
 
     clock = pygame.time.Clock()
-    finish = True
 
+    finish = True
     check = False
 
     font = pygame.font.SysFont("Arial", 48, True, False)
@@ -79,24 +136,19 @@ def main():
     confirm1 = pygame.sprite.Sprite()
     confirm1.image = confirm
     confirm1.rect = confirm.get_rect()
-    confirm1.rect.top = 400
-    confirm1.rect.left = 750
+    confirm1.rect.top, confirm1.rect.left = (400, 750)
 
     help1 = pygame.sprite.Sprite()
     help1.image = help
     help1.rect = help.get_rect()
-    help1.rect.top = 250
-    help1.rect.left = 750
+    help1.rect.top, help1.rect.left = (250, 750)
 
     reset1 = pygame.sprite.Sprite()
     reset1.image = reset
     reset1.rect = reset.get_rect()
-    reset1.rect.top = 100
-    reset1.rect.left = 750
-
+    reset1.rect.top, reset1.rect.left = (100, 750)
 
     p1, p2, p3, p4, p5, p6, p7, p8, p9 = 0, 0, 0, 0, 0, 0, 0, 0, 0
-
 
     mouse = pygame.Rect(0, 0, 1, 1)
 
@@ -120,6 +172,8 @@ def main():
     border3 = pygame.Rect(640, 100, 5, 395)
     border4 = pygame.Rect(250, 490, 395, 5)
 
+    listBlack = [div1, div2, div3, div4, border1, border2, border3, border4]
+    listTable = [mouse, r1, r2, r3, r4, r5, r6, r7, r8, r9]
 
     #matriz = [
      #       [4, 9, 2],
@@ -127,50 +181,73 @@ def main():
        #     [8, 1, 6]
         #    ]
 
+    levelT, helpT  = True, False
+    level = 1
+
     while finish:
         for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                finish = False
+            if event.type == pygame.QUIT: finish = False
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE: finish = False
             if event.type == pygame.MOUSEBUTTONDOWN:
                 check = False
                 if mouse.colliderect(r1):
                     p1 += 1
-                    if p1 > 9:
-                        p1 = 0
+                    if level == 1:
+                        if p1 > LIMITLEVE1: p1 = 0
+                    else:
+                        if p1 > LIMITLEVE2: p1 = 0
                 elif mouse.colliderect(r2):
                     p2 += 1
-                    if p2 > 9:
-                        p2 = 0
+                    if level == 1:
+                        if p2 > LIMITLEVE1: p2 = 0
+                    else:
+                        if p2 > LIMITLEVE2: p2 = 0
                 elif mouse.colliderect(r3):
                     p3 += 1
-                    if p3 > 9:
-                        p3 = 0
+                    if level == 1:
+                        if p3 > LIMITLEVE1: p3 = 0
+                    else:
+                        if p3 > LIMITLEVE2: p3 = 0
                 elif mouse.colliderect(r4):
                     p4 += 1
-                    if p4 > 9:
-                        p4 = 0
+                    if level == 1:
+                        if p4 > LIMITLEVE1: p4 = 0
+                    else:
+                        if p4 > LIMITLEVE2: p4 = 0
                 elif mouse.colliderect(r5):
                     p5 += 1
-                    if p5 > 9:
-                        p5 = 0
+                    if level == 1:
+                        if p5 > LIMITLEVE1: p5 = 0
+                    else:
+                        if p5 > LIMITLEVE2: p5 = 0
                 elif mouse.colliderect(r6):
                     p6 += 1
-                    if p6 > 9:
-                        p6 = 0
+                    if level == 1:
+                        if p6 > LIMITLEVE1: p6 = 0
+                    else:
+                        if p6 > LIMITLEVE2: p6 = 0
                 elif mouse.colliderect(r7):
                     p7 += 1
-                    if p7 > 9:
-                        p7 = 0
+                    if level == 1:
+                        if p7 > LIMITLEVE1: p7 = 0
+                    else:
+                        if p7 > LIMITLEVE2: p7 = 0
                 elif mouse.colliderect(r8):
                     p8 += 1
-                    if p8 > 9:
-                        p8 = 0
+                    if level == 1:
+                        if p8 > LIMITLEVE1: p8 = 0
+                    else:
+                        if p8 > LIMITLEVE2: p8 = 0
                 elif mouse.colliderect(r9):
                     p9 += 1
-                    if p9 > 9:
-                        p9 = 0
+                    if level == 1:
+                        if p9 > LIMITLEVE1: p9 = 0
+                    else:
+                        if p9 > LIMITLEVE2: p9 = 0
                 elif mouse.colliderect(help1):
-                    pass
+                    if helpT: helpT = False
+                    else: helpT = True
                 elif mouse.colliderect(confirm1):
                     check = True
                     matriz = [
@@ -178,14 +255,16 @@ def main():
                         [p4, p5, p6],
                         [p7, p8, p9]
                     ]
-                    result = confirmGame(matriz, font)
-                elif mouse.colliderect(reset1):
-                    p1, p2, p3, p4, p5, p6, p7, p8, p9 = \
-                        0, 0, 0, 0, 0, 0, 0, 0, 0
+                    result = confirmGame(matriz, font, BLACK)
+                elif mouse.colliderect(reset1): p1, p2, p3, p4, p5, p6, p7, p8, p9 = 0, 0, 0, 0, 0, 0, 0, 0, 0
+                if mouse.colliderect(level1):
+                    levelT= False
+                    level = 1
+                if mouse.colliderect(level2):
+                    levelT = False
+                    level = 2
 
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_ESCAPE:
-                    finish = False
+
 
         punto1 = font.render(str(p1), 0, BLACK)
         punto2 = font.render(str(p2), 0, BLACK)
@@ -198,31 +277,14 @@ def main():
         punto9 = font.render(str(p9), 0, BLACK)
 
         clock.tick(FPS)
-        mouse.left, mouse.top = pygame.mouse.get_pos()
 
         screen.fill(BACKGROUND)
 
-        pygame.draw.rect(screen, TABLE, mouse)
+        mouse.left, mouse.top = pygame.mouse.get_pos()
 
-        pygame.draw.rect(screen, TABLE, r1)
-        pygame.draw.rect(screen, TABLE, r2)
-        pygame.draw.rect(screen, TABLE, r3)
-        pygame.draw.rect(screen, TABLE, r4)
-        pygame.draw.rect(screen, TABLE, r5)
-        pygame.draw.rect(screen, TABLE, r6)
-        pygame.draw.rect(screen, TABLE, r7)
-        pygame.draw.rect(screen, TABLE, r8)
-        pygame.draw.rect(screen, TABLE, r9)
+        for rect in listTable: pygame.draw.rect(screen, TABLE, rect)
 
-        pygame.draw.rect(screen, BLACK, div1)
-        pygame.draw.rect(screen, BLACK, div2)
-        pygame.draw.rect(screen, BLACK, div3)
-        pygame.draw.rect(screen, BLACK, div4)
-
-        pygame.draw.rect(screen, BLACK, border1)
-        pygame.draw.rect(screen, BLACK, border2)
-        pygame.draw.rect(screen, BLACK, border3)
-        pygame.draw.rect(screen, BLACK, border4)
+        for rect in listBlack: pygame.draw.rect(screen, BLACK, rect)
 
         screen.blit(confirm1.image, confirm1.rect)
         screen.blit(help1.image, help1.rect)
@@ -238,9 +300,17 @@ def main():
         screen.blit(punto8, (440, 420))
         screen.blit(punto9, (570, 420))
 
+        if levelT: level1, level2 = menu(font, BLACK, screen, BACKGROUND)
         if check:
             screen.fill(BACKGROUND)
             screen.blit(result, (170, 200))
+        if helpT:
+            matriz = [
+                [p1, p2, p3],
+                [p4, p5, p6],
+                [p7, p8, p9]
+            ]
+            Help(screen, BLACK, matriz, font)
 
         pygame.display.update()
 
