@@ -155,6 +155,12 @@ def main():
     confirm = pygame.image.load("images/Confirm.png").convert_alpha()
     help = pygame.image.load("images/Help.png").convert_alpha()
     reset = pygame.image.load("images/Reset.png").convert_alpha()
+    back = pygame.image.load("images/Back.png").convert_alpha()
+
+    back1 = pygame.sprite.Sprite()
+    back1.image = back
+    back1.rect = back.get_rect()
+    back1.rect.top, back1.rect.left = (100, 150)
 
     confirm1 = pygame.sprite.Sprite()
     confirm1.image = confirm
@@ -308,6 +314,7 @@ def main():
         screen.blit(confirm1.image, confirm1.rect)
         screen.blit(help1.image, help1.rect)
         screen.blit(reset1.image, reset1.rect)
+        screen.blit(back1.image, back1.rect)
 
         if p1 > 9: screen.blit(punto1, (290, 140))
         else: screen.blit(punto1, (300, 140))
@@ -332,7 +339,7 @@ def main():
         #if levelT: level1, level2 = menu(font, BLACK, screen, BACKGROUND)
         if check:
             screen.fill(BACKGROUND)
-            screen.blit(result, (170, 200))
+            screen.blit(result, (290, 200))
         if helpT:
             matriz = [
                 [p1, p2, p3],
