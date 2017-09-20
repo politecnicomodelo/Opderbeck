@@ -53,6 +53,18 @@ def confirmGame(matriz, font, COLOR):
     else:
         return bien
 
+def Back(move, p1, p2, p3, p4, p5, p6, p7, p8, p9):
+    if move[-1] == "p1": p1 -= 1
+    elif move[-1] == "p2": p2 -= 1
+    elif move[-1] == "p3": p3 -= 1
+    elif move[-1] == "p4": p4 -= 1
+    elif move[-1] == "p5": p5 -= 1
+    elif move[-1] == "p6": p6 -= 1
+    elif move[-1] == "p7": p7 -= 1
+    elif move[-1] == "p8": p8 -= 1
+    elif move[-1] == "p9": p9 -= 1
+    move.pop(-1)
+    return move, p1, p2, p3, p4, p5, p6, p7, p8, p9
 
 def Help(screen, COLOR, matriz, font):
     f1 = matriz[0][0] + matriz[0][1] + matriz[0][2]
@@ -79,16 +91,15 @@ def Help(screen, COLOR, matriz, font):
     diag1 = font.render(str(d1), 0, COLOR)
     diag2 = font.render(str(d2), 0, COLOR)
 
-    screen.blit(fila1, (200, 160))
-    screen.blit(fila2, (200, 290))
-    screen.blit(fila3, (200, 420))
+    screen.blit(fila1, (200, 140))
+    screen.blit(fila2, (200, 270))
+    screen.blit(fila3, (200, 400))
     screen.blit(columna1, (300, 40))
     screen.blit(columna2, (440, 40))
     screen.blit(columna3, (570, 40))
     screen.blit(diag1, (200, 40))
     screen.blit(diag2, (200, 510))
     #pygame.draw.line(screen, COLOR, (220, 175), (590, 175))
-
 
 def menu(font, COLOR, screen, BACKGROUND):
     finish = True
@@ -150,6 +161,8 @@ def main():
     finish = True
     check = False
 
+    move = []
+
     font = pygame.font.SysFont("Arial", 48, True, False)
 
     confirm = pygame.image.load("images/Confirm.png").convert_alpha()
@@ -160,7 +173,7 @@ def main():
     back1 = pygame.sprite.Sprite()
     back1.image = back
     back1.rect = back.get_rect()
-    back1.rect.top, back1.rect.left = (100, 150)
+    back1.rect.top, back1.rect.left = (400, 80)
 
     confirm1 = pygame.sprite.Sprite()
     confirm1.image = confirm
@@ -224,54 +237,63 @@ def main():
                 check = False
                 if mouse.colliderect(r1):
                     p1 += 1
+                    move.append("p1")
                     if level == 1:
                         if p1 > LIMITLEVE1: p1 = 0
                     else:
                         if p1 > LIMITLEVE2: p1 = 0
                 elif mouse.colliderect(r2):
                     p2 += 1
+                    move.append("p2")
                     if level == 1:
                         if p2 > LIMITLEVE1: p2 = 0
                     else:
                         if p2 > LIMITLEVE2: p2 = 0
                 elif mouse.colliderect(r3):
                     p3 += 1
+                    move.append("p3")
                     if level == 1:
                         if p3 > LIMITLEVE1: p3 = 0
                     else:
                         if p3 > LIMITLEVE2: p3 = 0
                 elif mouse.colliderect(r4):
                     p4 += 1
+                    move.append("p4")
                     if level == 1:
                         if p4 > LIMITLEVE1: p4 = 0
                     else:
                         if p4 > LIMITLEVE2: p4 = 0
                 elif mouse.colliderect(r5):
                     p5 += 1
+                    move.append("p5")
                     if level == 1:
                         if p5 > LIMITLEVE1: p5 = 0
                     else:
                         if p5 > LIMITLEVE2: p5 = 0
                 elif mouse.colliderect(r6):
                     p6 += 1
+                    move.append("p6")
                     if level == 1:
                         if p6 > LIMITLEVE1: p6 = 0
                     else:
                         if p6 > LIMITLEVE2: p6 = 0
                 elif mouse.colliderect(r7):
                     p7 += 1
+                    move.append("p7")
                     if level == 1:
                         if p7 > LIMITLEVE1: p7 = 0
                     else:
                         if p7 > LIMITLEVE2: p7 = 0
                 elif mouse.colliderect(r8):
                     p8 += 1
+                    move.append("p8")
                     if level == 1:
                         if p8 > LIMITLEVE1: p8 = 0
                     else:
                         if p8 > LIMITLEVE2: p8 = 0
                 elif mouse.colliderect(r9):
                     p9 += 1
+                    move.append("p9")
                     if level == 1:
                         if p9 > LIMITLEVE1: p9 = 0
                     else:
@@ -288,6 +310,8 @@ def main():
                     ]
                     result = confirmGame(matriz, font, BLACK)
                 elif mouse.colliderect(reset1): p1, p2, p3, p4, p5, p6, p7, p8, p9 = 0, 0, 0, 0, 0, 0, 0, 0, 0
+                elif mouse.colliderect(back1):
+                    if move: move, p1, p2, p3, p4, p5, p6, p7, p8, p9 = Back(move, p1, p2, p3, p4, p5, p6, p7, p8, p9)
 
 
 
@@ -340,7 +364,7 @@ def main():
         if check:
             screen.fill(BACKGROUND)
             screen.blit(result, (290, 200))
-        if helpT:
+        elif helpT:
             matriz = [
                 [p1, p2, p3],
                 [p4, p5, p6],
