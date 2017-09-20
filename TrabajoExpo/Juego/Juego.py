@@ -5,8 +5,8 @@ pygame.init()
 
 def confirmGame(matriz, font, COLOR):
     total = 0
-    for f in xrange(3):
-        for c in xrange(3):
+    for f in range(3):
+        for c in range(3):
             total += matriz[f][c]
         break
 
@@ -24,10 +24,10 @@ def confirmGame(matriz, font, COLOR):
     diagonal = matriz[0][0] + matriz[1][1] + matriz[2][2]
     diagonal1 = matriz[0][2] + matriz[1][1] + matriz[2][0]
     cantidad = 0
-    for f1 in xrange(3):
-        for c1 in xrange(3):
-            for f in xrange(3):
-                for c in xrange(3):
+    for f1 in range(3):
+        for c1 in range(3):
+            for f in range(3):
+                for c in range(3):
                     if matriz[f][c] == matriz[f1][c1]:
                         cantidad += 1
 
@@ -36,7 +36,7 @@ def confirmGame(matriz, font, COLOR):
     fil = font.render("Esta mal una FILA", 0, COLOR)
     diag = font.render("Esta mal una DIAGONAL", 0, COLOR)
 
-    mal = font.render("ALGO ESTA MAL, PRUEBA DENUEVO", 0, COLOR)
+    mal = font.render("ALGO ESTA MAL", 0, COLOR)
     bien = font.render("GANASTE!  FELICITACIONES!", 0, COLOR)
 
     #if columna != total or columna1 != total or columna2 != total:
@@ -91,21 +91,44 @@ def Help(screen, COLOR, matriz, font):
 
 
 def menu(font, COLOR, screen, BACKGROUND):
+    finish = True
     level1 = font.render("NIVEL 1", 0, COLOR)
     level2 = font.render("NIVEL 2", 0, COLOR)
 
-    level3 = pygame.Rect(380, 235, 140, 30)
-    level4 = pygame.Rect(380, 285, 140, 30)
+    level3 = pygame.Rect(380, 245, 145, 40)
+    level4 = pygame.Rect(380, 305, 145, 40)
 
-    screen.fill(BACKGROUND)
+    clock = pygame.time.Clock()
 
-    pygame.draw.rect(screen, BACKGROUND, level3)
-    pygame.draw.rect(screen, BACKGROUND, level4)
+    mouse = pygame.Rect(0, 0, 1, 1)
 
-    screen.blit(level1, (380, 235))
-    screen.blit(level2, (380, 285))
+    while finish:
+        for event in pygame.event.get():
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE: finish = False
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if mouse.colliderect(level3):
+                    level = 1
+                    finish = False
+                if mouse.colliderect(level4):
+                    level = 2
+                    finish = False
 
-    return level3, level4
+        mouse.left, mouse.top = pygame.mouse.get_pos()
+        clock.tick(20)
+
+        screen.fill(BACKGROUND)
+
+        pygame.draw.rect(screen, BACKGROUND, mouse)
+        pygame.draw.rect(screen, BACKGROUND, level3)
+        pygame.draw.rect(screen, BACKGROUND, level4)
+
+        screen.blit(level1, (380, 235))
+        screen.blit(level2, (380, 300))
+
+        pygame.display.update()
+
+    return level3, level4, level
 
 def main():
     WIDTH = 1000
@@ -181,8 +204,10 @@ def main():
        #     [8, 1, 6]
         #    ]
 
-    levelT, helpT  = True, False
+    helpT = False
     level = 1
+
+    level1, level2, level = menu(font, BLACK, screen, BACKGROUND)
 
     while finish:
         for event in pygame.event.get():
@@ -257,12 +282,6 @@ def main():
                     ]
                     result = confirmGame(matriz, font, BLACK)
                 elif mouse.colliderect(reset1): p1, p2, p3, p4, p5, p6, p7, p8, p9 = 0, 0, 0, 0, 0, 0, 0, 0, 0
-                if mouse.colliderect(level1):
-                    levelT= False
-                    level = 1
-                if mouse.colliderect(level2):
-                    levelT = False
-                    level = 2
 
 
 
@@ -290,17 +309,27 @@ def main():
         screen.blit(help1.image, help1.rect)
         screen.blit(reset1.image, reset1.rect)
 
-        screen.blit(punto1, (300, 160))
-        screen.blit(punto2, (440, 160))
-        screen.blit(punto3, (570, 160))
-        screen.blit(punto4, (300, 290))
-        screen.blit(punto5, (440, 290))
-        screen.blit(punto6, (570, 290))
-        screen.blit(punto7, (300, 420))
-        screen.blit(punto8, (440, 420))
-        screen.blit(punto9, (570, 420))
+        if p1 > 9: screen.blit(punto1, (290, 140))
+        else: screen.blit(punto1, (300, 140))
+        if p2 > 9: screen.blit(punto2, (430, 140))
+        else: screen.blit(punto2, (440, 140))
+        if p3 > 9: screen.blit(punto3, (560, 140))
+        else: screen.blit(punto3, (570, 140))
+        if p4 > 9: screen.blit(punto4, (290, 270))
+        else: screen.blit(punto4, (300, 270))
+        if p5 > 9: screen.blit(punto5, (430, 270))
+        else: screen.blit(punto5, (440, 270))
+        if p6 > 9: screen.blit(punto6, (560, 270))
+        else: screen.blit(punto6, (570, 270))
+        if p7 > 9: screen.blit(punto7, (290, 400))
+        else: screen.blit(punto7, (300, 400))
+        if p8 > 9: screen.blit(punto8, (430, 400))
+        else: screen.blit(punto8, (440, 400))
+        if p9 > 9: screen.blit(punto9, (560, 400))
+        else: screen.blit(punto9, (570, 400))
 
-        if levelT: level1, level2 = menu(font, BLACK, screen, BACKGROUND)
+
+        #if levelT: level1, level2 = menu(font, BLACK, screen, BACKGROUND)
         if check:
             screen.fill(BACKGROUND)
             screen.blit(result, (170, 200))
