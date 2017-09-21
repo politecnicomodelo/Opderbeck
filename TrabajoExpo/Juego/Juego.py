@@ -54,16 +54,17 @@ def confirmGame(matriz, font, COLOR):
         return bien
 
 def Back(move, p1, p2, p3, p4, p5, p6, p7, p8, p9):
-    if move[-1] == "p1": p1 -= 1
-    elif move[-1] == "p2": p2 -= 1
-    elif move[-1] == "p3": p3 -= 1
-    elif move[-1] == "p4": p4 -= 1
-    elif move[-1] == "p5": p5 -= 1
-    elif move[-1] == "p6": p6 -= 1
-    elif move[-1] == "p7": p7 -= 1
-    elif move[-1] == "p8": p8 -= 1
-    elif move[-1] == "p9": p9 -= 1
+    if move[-1] == "p1" and p1 > 0: p1 -= 1
+    elif move[-1] == "p2" and p2 > 0: p2 -= 1
+    elif move[-1] == "p3" and p3 > 0: p3 -= 1
+    elif move[-1] == "p4" and p4 > 0: p4 -= 1
+    elif move[-1] == "p5" and p5 > 0: p5 -= 1
+    elif move[-1] == "p6" and p6 > 0: p6 -= 1
+    elif move[-1] == "p7" and p7 > 0: p7 -= 1
+    elif move[-1] == "p8" and p8 > 0: p8 -= 1
+    elif move[-1] == "p9" and p9 > 0: p9 -= 1
     move.pop(-1)
+
     return move, p1, p2, p3, p4, p5, p6, p7, p8, p9
 
 def Help(screen, COLOR, matriz, font):
@@ -115,6 +116,7 @@ def menu(font, COLOR, screen, BACKGROUND):
 
     while finish:
         for event in pygame.event.get():
+            if event.type == pygame.QUIT: finish = False
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE: finish = False
             if event.type == pygame.MOUSEBUTTONDOWN:
@@ -359,8 +361,6 @@ def main():
         if p9 > 9: screen.blit(punto9, (560, 400))
         else: screen.blit(punto9, (570, 400))
 
-
-        #if levelT: level1, level2 = menu(font, BLACK, screen, BACKGROUND)
         if check:
             screen.fill(BACKGROUND)
             screen.blit(result, (290, 200))
