@@ -148,9 +148,10 @@ def main():
     HEIGHT = 600
     FPS = 60
 
-    TABLE = (252, 239, 176)
-    BLACK = (0, 0, 0)
-    BACKGROUND = (250, 246, 222)
+    TABLE = (60, 216, 255)
+    BLACK = (0 ,0, 0)
+    BACKGROUND = (222,252,255)
+
 
     LIMITLEVE1 = 9
     LIMITLEVE2 = 15
@@ -170,12 +171,6 @@ def main():
     confirm = pygame.image.load("images/Confirm.png").convert_alpha()
     help = pygame.image.load("images/Help.png").convert_alpha()
     reset = pygame.image.load("images/Reset.png").convert_alpha()
-    back = pygame.image.load("images/Back.png").convert_alpha()
-
-    back1 = pygame.sprite.Sprite()
-    back1.image = back
-    back1.rect = back.get_rect()
-    back1.rect.top, back1.rect.left = (400, 80)
 
     confirm1 = pygame.sprite.Sprite()
     confirm1.image = confirm
@@ -238,63 +233,108 @@ def main():
             if event.type == pygame.MOUSEBUTTONDOWN:
                 check = False
                 if mouse.colliderect(r1):
-                    p1 += 1
+                    if pygame.mouse.get_pressed() == (0, 0, 1):
+                        if p1 == 0:
+                            if level == 1: p1 = LIMITLEVE1
+                            else: p1 = LIMITLEVE2
+                        else: p1 -= 1
+                    elif pygame.mouse.get_pressed() == (1,0,0): p1 += 1
                     move.append("p1")
                     if level == 1:
                         if p1 > LIMITLEVE1: p1 = 0
                     else:
                         if p1 > LIMITLEVE2: p1 = 0
                 elif mouse.colliderect(r2):
-                    p2 += 1
+                    if pygame.mouse.get_pressed() == (0, 0, 1):
+                        if p2 == 0:
+                            if level == 1: p2 = LIMITLEVE1
+                            else: p2 = LIMITLEVE2
+                        else: p2 -= 1
+                    else:p2 += 1
                     move.append("p2")
                     if level == 1:
                         if p2 > LIMITLEVE1: p2 = 0
                     else:
                         if p2 > LIMITLEVE2: p2 = 0
                 elif mouse.colliderect(r3):
-                    p3 += 1
+                    if pygame.mouse.get_pressed() == (0, 0, 1):
+                        if p3 == 0:
+                            if level == 1: p3 = LIMITLEVE1
+                            else: p3 = LIMITLEVE2
+                        else: p3 -= 1
+                    else: p3 += 1
                     move.append("p3")
                     if level == 1:
                         if p3 > LIMITLEVE1: p3 = 0
                     else:
                         if p3 > LIMITLEVE2: p3 = 0
                 elif mouse.colliderect(r4):
-                    p4 += 1
+                    if pygame.mouse.get_pressed() == (0, 0, 1):
+                        if p4 == 0:
+                            if level == 1: p4 = LIMITLEVE1
+                            else: p4 = LIMITLEVE2
+                        else: p4 -= 1
+                    else: p4 += 1
                     move.append("p4")
                     if level == 1:
                         if p4 > LIMITLEVE1: p4 = 0
                     else:
                         if p4 > LIMITLEVE2: p4 = 0
                 elif mouse.colliderect(r5):
-                    p5 += 1
+                    if pygame.mouse.get_pressed() == (0, 0, 1):
+                        if p5 == 0:
+                            if level == 1: p5 = LIMITLEVE1
+                            else: p5 = LIMITLEVE2
+                        else: p5 -= 1
+                    else: p5 += 1
                     move.append("p5")
                     if level == 1:
                         if p5 > LIMITLEVE1: p5 = 0
                     else:
                         if p5 > LIMITLEVE2: p5 = 0
                 elif mouse.colliderect(r6):
-                    p6 += 1
+                    if pygame.mouse.get_pressed() == (0, 0, 1):
+                        if p6 == 0:
+                            if level == 1: p6 = LIMITLEVE1
+                            else: p6 = LIMITLEVE2
+                        else: p6 -= 1
+                    else: p6 += 1
                     move.append("p6")
                     if level == 1:
                         if p6 > LIMITLEVE1: p6 = 0
                     else:
                         if p6 > LIMITLEVE2: p6 = 0
                 elif mouse.colliderect(r7):
-                    p7 += 1
+                    if pygame.mouse.get_pressed() == (0, 0, 1):
+                        if p7 == 0:
+                            if level == 1: p7 = LIMITLEVE1
+                            else: p7 = LIMITLEVE2
+                        else: p7 -= 1
+                    else: p7 += 1
                     move.append("p7")
                     if level == 1:
                         if p7 > LIMITLEVE1: p7 = 0
                     else:
                         if p7 > LIMITLEVE2: p7 = 0
                 elif mouse.colliderect(r8):
-                    p8 += 1
+                    if pygame.mouse.get_pressed() == (0, 0, 1):
+                        if p8 == 0:
+                            if level == 1: p8 = LIMITLEVE1
+                            else: p8 = LIMITLEVE2
+                        else: p8 -= 1
+                    else: p8+= 1
                     move.append("p8")
                     if level == 1:
                         if p8 > LIMITLEVE1: p8 = 0
                     else:
                         if p8 > LIMITLEVE2: p8 = 0
                 elif mouse.colliderect(r9):
-                    p9 += 1
+                    if pygame.mouse.get_pressed() == (0, 0, 1):
+                        if p9 == 0:
+                            if level == 1: p9 = LIMITLEVE1
+                            else: p9 = LIMITLEVE2
+                        else: p9 -= 1
+                    else: p9 += 1
                     move.append("p9")
                     if level == 1:
                         if p9 > LIMITLEVE1: p9 = 0
@@ -312,8 +352,6 @@ def main():
                     ]
                     result = confirmGame(matriz, font, BLACK)
                 elif mouse.colliderect(reset1): p1, p2, p3, p4, p5, p6, p7, p8, p9 = 0, 0, 0, 0, 0, 0, 0, 0, 0
-                elif mouse.colliderect(back1):
-                    if move: move, p1, p2, p3, p4, p5, p6, p7, p8, p9 = Back(move, p1, p2, p3, p4, p5, p6, p7, p8, p9)
 
 
 
@@ -340,7 +378,6 @@ def main():
         screen.blit(confirm1.image, confirm1.rect)
         screen.blit(help1.image, help1.rect)
         screen.blit(reset1.image, reset1.rect)
-        screen.blit(back1.image, back1.rect)
 
         if p1 > 9: screen.blit(punto1, (290, 140))
         else: screen.blit(punto1, (300, 140))
