@@ -4,25 +4,24 @@ pygame.init()
 
 
 def confirmGame(matriz, font, COLOR):
+
     total = 0
     for f in range(3):
         for c in range(3):
             total += matriz[f][c]
         break
 
-    #comprueba las columnas
     columna = matriz[0][0] + matriz[0][1] + matriz[0][2]
     columna1 = matriz[1][0] + matriz[1][1] + matriz[1][2]
     columna2 = matriz[2][0] + matriz[2][1] + matriz[2][2]
 
-    # comprueba las filas
     fila = matriz[0][0] + matriz[1][0] + matriz[2][0]
     fila1 = matriz[0][1] + matriz[1][1] + matriz[2][1]
     fila2 = matriz[0][2] + matriz[1][2] + matriz[2][2]
 
-    # comprueba las diagonales
     diagonal = matriz[0][0] + matriz[1][1] + matriz[2][2]
     diagonal1 = matriz[0][2] + matriz[1][1] + matriz[2][0]
+
     cantidad = 0
     for f1 in range(3):
         for c1 in range(3):
@@ -31,20 +30,9 @@ def confirmGame(matriz, font, COLOR):
                     if matriz[f][c] == matriz[f1][c1]:
                         cantidad += 1
 
-
-    col = font.render("Esta mal una COLUMNA", 0, COLOR)
-    fil = font.render("Esta mal una FILA", 0, COLOR)
-    diag = font.render("Esta mal una DIAGONAL", 0, COLOR)
-
     mal = font.render("ALGO ESTA MAL", 0, COLOR)
     bien = font.render("GANASTE!  FELICITACIONES!", 0, COLOR)
 
-    #if columna != total or columna1 != total or columna2 != total:
-      #  return col
-    #elif fila != total or fila1 != total or fila2 != total:
-      #  return fil
-    #elif diagonal != total or diagonal1 != total:
-     #   return diag
     if cantidad > 9:
         return mal
     if columna != total or columna1 != total or columna2 != total or fila != total or \
@@ -53,19 +41,6 @@ def confirmGame(matriz, font, COLOR):
     else:
         return bien
 
-def Back(move, p1, p2, p3, p4, p5, p6, p7, p8, p9):
-    if move[-1] == "p1" and p1 > 0: p1 -= 1
-    elif move[-1] == "p2" and p2 > 0: p2 -= 1
-    elif move[-1] == "p3" and p3 > 0: p3 -= 1
-    elif move[-1] == "p4" and p4 > 0: p4 -= 1
-    elif move[-1] == "p5" and p5 > 0: p5 -= 1
-    elif move[-1] == "p6" and p6 > 0: p6 -= 1
-    elif move[-1] == "p7" and p7 > 0: p7 -= 1
-    elif move[-1] == "p8" and p8 > 0: p8 -= 1
-    elif move[-1] == "p9" and p9 > 0: p9 -= 1
-    move.pop(-1)
-
-    return move, p1, p2, p3, p4, p5, p6, p7, p8, p9
 
 def Help(screen, COLOR, matriz, font):
     f1 = matriz[0][0] + matriz[0][1] + matriz[0][2]
@@ -144,13 +119,13 @@ def menu(font, COLOR, screen, BACKGROUND):
     return level3, level4, level
 
 def main():
-    WIDTH = 1000
-    HEIGHT = 600
+    WIDTH = 1280
+    HEIGHT = 700
     FPS = 60
 
     TABLE = (60, 216, 255)
-    BLACK = (0 ,0, 0)
-    BACKGROUND = (222,252,255)
+    BLACK = (0,0, 0)
+    BACKGROUND = (222, 252, 255)
 
 
     LIMITLEVE1 = 9
@@ -164,13 +139,17 @@ def main():
     finish = True
     check = False
 
-    move = []
-
     font = pygame.font.SysFont("Arial", 48, True, False)
 
     confirm = pygame.image.load("images/Confirm.png").convert_alpha()
     help = pygame.image.load("images/Help.png").convert_alpha()
     reset = pygame.image.load("images/Reset.png").convert_alpha()
+    back = pygame.image.load("images/Back.png").convert_alpha()
+
+    back1 = pygame.sprite.Sprite()
+    back1.image = back
+    back1.rect = back.get_rect()
+    back1.rect.top, back1.rect.left = (110, 60)
 
     confirm1 = pygame.sprite.Sprite()
     confirm1.image = confirm
@@ -239,7 +218,6 @@ def main():
                             else: p1 = LIMITLEVE2
                         else: p1 -= 1
                     elif pygame.mouse.get_pressed() == (1,0,0): p1 += 1
-                    move.append("p1")
                     if level == 1:
                         if p1 > LIMITLEVE1: p1 = 0
                     else:
@@ -251,7 +229,6 @@ def main():
                             else: p2 = LIMITLEVE2
                         else: p2 -= 1
                     else:p2 += 1
-                    move.append("p2")
                     if level == 1:
                         if p2 > LIMITLEVE1: p2 = 0
                     else:
@@ -263,7 +240,6 @@ def main():
                             else: p3 = LIMITLEVE2
                         else: p3 -= 1
                     else: p3 += 1
-                    move.append("p3")
                     if level == 1:
                         if p3 > LIMITLEVE1: p3 = 0
                     else:
@@ -275,7 +251,6 @@ def main():
                             else: p4 = LIMITLEVE2
                         else: p4 -= 1
                     else: p4 += 1
-                    move.append("p4")
                     if level == 1:
                         if p4 > LIMITLEVE1: p4 = 0
                     else:
@@ -287,7 +262,6 @@ def main():
                             else: p5 = LIMITLEVE2
                         else: p5 -= 1
                     else: p5 += 1
-                    move.append("p5")
                     if level == 1:
                         if p5 > LIMITLEVE1: p5 = 0
                     else:
@@ -299,7 +273,6 @@ def main():
                             else: p6 = LIMITLEVE2
                         else: p6 -= 1
                     else: p6 += 1
-                    move.append("p6")
                     if level == 1:
                         if p6 > LIMITLEVE1: p6 = 0
                     else:
@@ -311,7 +284,6 @@ def main():
                             else: p7 = LIMITLEVE2
                         else: p7 -= 1
                     else: p7 += 1
-                    move.append("p7")
                     if level == 1:
                         if p7 > LIMITLEVE1: p7 = 0
                     else:
@@ -323,7 +295,6 @@ def main():
                             else: p8 = LIMITLEVE2
                         else: p8 -= 1
                     else: p8+= 1
-                    move.append("p8")
                     if level == 1:
                         if p8 > LIMITLEVE1: p8 = 0
                     else:
@@ -335,7 +306,6 @@ def main():
                             else: p9 = LIMITLEVE2
                         else: p9 -= 1
                     else: p9 += 1
-                    move.append("p9")
                     if level == 1:
                         if p9 > LIMITLEVE1: p9 = 0
                     else:
@@ -378,6 +348,7 @@ def main():
         screen.blit(confirm1.image, confirm1.rect)
         screen.blit(help1.image, help1.rect)
         screen.blit(reset1.image, reset1.rect)
+        screen.blit(back1.image, back1.rect)
 
         if p1 > 9: screen.blit(punto1, (290, 140))
         else: screen.blit(punto1, (300, 140))
