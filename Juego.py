@@ -3,7 +3,7 @@ pygame.init()
 
 
 
-def confirmGame(matriz):
+def confirmGame(matriz, screen):
 
     Win = pygame.image.load("images/Win.png")
     Lose = pygame.image.load("images/Lose.png")
@@ -25,6 +25,8 @@ def confirmGame(matriz):
     diagonal = matriz[0][0] + matriz[1][1] + matriz[2][2]
     diagonal1 = matriz[0][2] + matriz[1][1] + matriz[2][0]
 
+    total = 15
+
     cantidad = 0
     for f1 in range(3):
         for c1 in range(3):
@@ -33,16 +35,34 @@ def confirmGame(matriz):
                     if matriz[f][c] == matriz[f1][c1]:
                         cantidad += 1
 
-
     if cantidad > 9:
-        return Lose
-    if columna != total or columna1 != total or columna2 != total or fila != total or \
+        Confirm(screen, Lose)
+    elif columna != total or columna1 != total or columna2 != total or fila != total or \
                     fila1 != total or fila2 != total or diagonal != total or diagonal1 != total:
-        return Lose
+        Confirm(screen, Lose)
     else:
-        return Win
+        Confirm(screen, Win)
 
-def help(screen):
+def Confirm(screen, result):
+    Background = pygame.image.load("images/Background.png")
+    finish = True
+    clock = pygame.time.Clock()
+    mouse = pygame.Rect(0, 0, 1, 1)
+    while finish:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT: finish = False
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE: finish = False
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                    finish = False
+
+        mouse.left, mouse.top = pygame.mouse.get_pos()
+        clock.tick(20)
+        screen.blit(Background, (0, 0))
+        screen.blit(result, (0, 0))
+        pygame.display.update()
+
+def Help(screen):
     Help = pygame.image.load("images/Help.png")
     Background = pygame.image.load("images/Background.png")
     finish = True
@@ -61,8 +81,6 @@ def help(screen):
         screen.blit(Background, (0, 0))
         screen.blit(Help, (0, 0))
         pygame.display.update()
-
-
 
 def menu(screen):
     Tutorial = pygame.image.load("images/Tutorial.png")
@@ -102,8 +120,6 @@ def main():
     clock = pygame.time.Clock()
 
     finish = True
-    check = False
-
     font = pygame.font.SysFont("Arial", 54, True, False)
 
     Background = pygame.image.load("images/Background.png")
@@ -144,7 +160,7 @@ def main():
                 if event.key == pygame.K_ESCAPE: finish = False
             if event.type == pygame.MOUSEBUTTONDOWN:
                 time = 0
-                check = False
+
                 if mouse.colliderect(r1):
                     if pygame.mouse.get_pressed() == (0, 0, 1):
                         if p1 == 0: p1 = LIMITLEVE1
@@ -209,16 +225,16 @@ def main():
                         p9 += 1
                         if p9 > LIMITLEVE1: p9 = 0
                 elif mouse.colliderect(confirm):
-                    check = True
                     matriz = [
                         [p1, p2, p3],
                         [p4, p5, p6],
                         [p7, p8, p9]
                     ]
-                    result = confirmGame(matriz)
-                elif mouse.colliderect(confirm): help(screen)
-                elif mouse.colliderect(reset): p1, p2, p3, p4, p5, p6, p7, p8, p9 = 0, 0, 0, 0, 0, 0, 0, 0, 0
+                    confirmGame(matriz, screen)
+                elif mouse.colliderect(help): Help(screen)
                 elif mouse.colliderect(tutorial): menu(screen)
+                elif mouse.colliderect(reset): p1, p2, p3, p4, p5, p6, p7, p8, p9 = 0, 0, 0, 0, 0, 0, 0, 0, 0
+
         time += 1
         punto1 = font.render(str(p1), 1, BLACK)
         punto2 = font.render(str(p2), 1, BLACK)
@@ -251,9 +267,8 @@ def main():
         if time == 1500:
             p1, p2, p3, p4, p5, p6, p7, p8, p9 = 0, 0, 0, 0, 0, 0, 0, 0, 0
             menu(screen)
+        elif time == 4500: screen.blit(Error, (0, 0))
 
-        if check:
-            screen.blit(result, (0, 0))
         pygame.display.update()
 
 
