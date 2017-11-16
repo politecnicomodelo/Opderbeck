@@ -23,7 +23,6 @@ class Lugar(object):
             if kontinente.codigo == continente.codigo:
                 self.listaLugar.append(continente)
 
-
 class Continente (Lugar):
 
     listaContinente = []
@@ -147,8 +146,6 @@ class Pais (Lugar):
                     pais.listaProvincia(provincia)
                 self.listaPais.remove(pais)
 
-
-
 class Provincia (Lugar):
 
     listaProvincia = []
@@ -235,7 +232,6 @@ class Ciudad (Lugar):
                     ciudad.listaBarrio.remove(barrio)
                 self.listaCiudad.remove(ciudad)
 
-
 class Barrio (Lugar):
     listaBarrio = []
     listaCiudad = []
@@ -257,19 +253,18 @@ class Barrio (Lugar):
         self.SetNombre(nombre)
         self.SetCodigo(codigo)
         self.SetCoordenadas(coordenadas)
+1
+    #def ConsultarBarrio (self, codigo):
+        #for barrio in self.listaBarrio:
+            #if barrio.codigo == codigo:
+                #return barrio
 
+    #def ConsultarPoblacion(self, codigo):
+        #for barrio in self.listaBarrio:
+            #if barrio.codigo == codigo:
+                #return barrio.poblacion
 
-    def ConsultarBarrio(self, codigo):
-        for barrio in self.listaBarrio:
-            if barrio.codigo == codigo:
-                return barrio
-
-    def ConsultarPoblacion(self, codigo):
-        for barrio in self.listaBarrio:
-            if barrio.codigo == codigo:
-                return barrio.poblacion
-
-    def EliminarBarrio(self, codigo):
-        for barrio in self.listaBarrio:
-            if barrio.codigo == codigo:
-                barrio.listaBarrio.remove(barrio)
+    #def EliminarBarrio(self, codigo):
+        #for barrio in self.listaBarrio:
+            #if barrio.codigo == codigo:
+                #barrio.listaBarrio.remove(barrio)
